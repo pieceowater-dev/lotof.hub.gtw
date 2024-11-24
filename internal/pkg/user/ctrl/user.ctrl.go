@@ -104,7 +104,7 @@ func (c *UserController) UpdateUser(id string, input *model.UpdateUserInput) (*m
 	}
 
 	// Call service to update the updateUser and get raw response
-	updateUser, err := c.userService.UpdateUser(id, request)
+	updateUser, err := c.userService.UpdateUser(request)
 	if err != nil {
 		log.Printf("Error updating updateUser: %v", err)
 		return nil, err

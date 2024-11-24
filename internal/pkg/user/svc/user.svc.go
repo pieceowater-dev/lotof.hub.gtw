@@ -93,7 +93,7 @@ func (s *UserService) FindOneUser(id string) (*user.User, error) {
 }
 
 // UpdateUser updates an existing user's details and returns raw gRPC response.
-func (s *UserService) UpdateUser(id string, input *user.UpdateUserRequest) (*user.User, error) {
+func (s *UserService) UpdateUser(input *user.UpdateUserRequest) (*user.User, error) {
 	ctx := context.Background()
 
 	response, err := s.transport.Send(ctx, s.client, "UpdateUser", input)
