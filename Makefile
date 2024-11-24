@@ -4,7 +4,7 @@ MAIN_FILE = cmd/server/main.go
 PROTOC = protoc
 PROTOC_GEN_GO = $(GOPATH)/bin/protoc-gen-go
 PROTOC_GEN_GRPC_GO = $(GOPATH)/bin/protoc-gen-go-grpc
-PROTOC_PKG = github.com/pieceowater-dev/lotof.sample.proto
+PROTOC_PKG = github.com/pieceowater-dev/lotof.hub.proto
 PROTOC_PKG_PATH = $(shell go list -m -f '{{.Dir}}' $(PROTOC_PKG))
 PROTOC_DIR = protos
 PROTOC_OUT_DIR = ./internal/core/grpc/generated
@@ -38,14 +38,14 @@ run: build
 clean:
 	rm -rf $(BUILD_DIR) gql-clean grpc-clean
 
-# gRPC code generation
 grpc-gen:
+	@echo "Generating gRPC code from proto files..."
 	mkdir -p $(PROTOC_OUT_DIR)
-	$(PROTOC) \
+	find $(PROTOC_PKG_PATH)/$(PROTOC_DIR) -name "*.proto" | xargs $(PROTOC) \
 		-I $(PROTOC_PKG_PATH)/$(PROTOC_DIR) \
 		--go_out=$(PROTOC_OUT_DIR) \
-		--go-grpc_out=$(PROTOC_OUT_DIR) \
-		$(PROTOC_PKG_PATH)/$(PROTOC_DIR)/*/*/*.proto
+		--go-grpc_out=$(PROTOC_OUT_DIR)
+	@echo "gRPC code generation completed!"
 
 # Clean gRPC generated files
 grpc-clean:
