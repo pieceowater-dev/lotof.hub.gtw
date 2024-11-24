@@ -8,8 +8,8 @@ import (
 )
 
 type Config struct {
-	AppPort                     string
-	LotofHubUsersSvcGrpcAddress string
+	AppPort                      string
+	LotofHubMSvcUsersGrpcAddress string
 }
 
 var (
@@ -25,8 +25,8 @@ func Inst() *Config {
 		}
 
 		instance = &Config{
-			AppPort:                     getEnv("APP_PORT", "8080"),
-			LotofHubUsersSvcGrpcAddress: getEnv("LOTOF_HUB_USERS_SVC_GRPC_ADDRESS", "localhost:50051"),
+			AppPort:                      getEnv("APP_PORT", "8080"),
+			LotofHubMSvcUsersGrpcAddress: getEnv("LOTOF_HUB_USERS_SVC_GRPC_ADDRESS", "localhost:50051"),
 		}
 	})
 	return instance
