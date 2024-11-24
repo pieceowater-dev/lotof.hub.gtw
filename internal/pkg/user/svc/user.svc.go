@@ -18,7 +18,7 @@ func NewUserService() *UserService {
 	factory := transport.NewFactory()
 	grpcTransport := factory.CreateTransport(
 		transport.GRPC,
-		cfg.Inst().LotofSampleSvcGrpcAddress,
+		cfg.Inst().LotofHubUsersSvcGrpcAddress,
 	)
 
 	// Create the client once and store it as a property
