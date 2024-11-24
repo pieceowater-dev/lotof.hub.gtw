@@ -1,6 +1,6 @@
-# lotof.sample.gateway
+# lotof.hub.gtw
 
-Welcome to the **Lotof Sample Gateway** project! This project provides a structure to generate, build, and run a [GraphQL](https://graphql.org/) server using [gqlgen](https://github.com/99designs/gqlgen) and [Docker](https://www.docker.com/) for containerization. Below you'll find a comprehensive guide to get started with this project.
+Welcome to the **Lotof HUB Gateway** project! This project provides a structure to generate, build, and run a [GraphQL](https://graphql.org/) server using [gqlgen](https://github.com/99designs/gqlgen) and [Docker](https://www.docker.com/) for containerization. Below you'll find a comprehensive guide to get started with this project.
 
 ## Prerequisites
 
@@ -76,8 +76,8 @@ The project uses a Makefile to automate common tasks. Below are the available ma
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/pieceowater-dev/lotof.sample.gtw.git
-   cd lotof.sample.gtw
+   git clone https://github.com/pieceowater-dev/lotof.hub.gtw.git
+   cd lotof.hub.gtw
    ```
 
 2.	Install dependencies:
