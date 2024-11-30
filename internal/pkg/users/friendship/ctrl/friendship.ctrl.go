@@ -23,12 +23,12 @@ func (c *FriendshipController) AcceptFriendshipRequest(input model.AcceptFriends
 	return nil, nil
 }
 
-func (c *FriendshipController) RemoveFriendshipRequest(input model.RemoveFriendshipInput) (bool, error) {
-	//return c.friendshipService.RemoveFriendshipRequest(ctx, input)
+func (c *FriendshipController) RemoveFriendship(input model.RemoveFriendshipInput) (bool, error) {
+	//return c.friendshipService.RemoveFriendship(ctx, input)
 	return true, nil
 }
 
-func (c *FriendshipController) FriendshipRequestList(filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
-	//return c.friendshipService.FriendshipRequestList(ctx, filter)
+func (c *FriendshipController) FriendshipList(filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
+	//return c.friendshipService.FriendshipList(ctx, filter)
 	return nil, nil
 }

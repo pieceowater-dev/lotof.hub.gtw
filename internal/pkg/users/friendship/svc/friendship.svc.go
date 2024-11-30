@@ -41,13 +41,13 @@ func (s *FriendshipService) AcceptFriendshipRequest(ctx context.Context, input *
 	return nil, nil
 }
 
-func (s *FriendshipService) RemoveFriendshipRequest(ctx context.Context, input *model.RemoveFriendshipInput) error {
+func (s *FriendshipService) RemoveFriendship(ctx context.Context, input *model.RemoveFriendshipInput) error {
 	//_, err := s.client.RemoveFriendshipRequest(ctx, input)
 	//return err
 	return nil
 }
 
-func (s *FriendshipService) FriendshipRequestList(ctx context.Context, filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
+func (s *FriendshipService) FriendshipList(ctx context.Context, filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
 	//return s.client.FriendshipRequestList(ctx, filter)
 	return nil, nil
 }

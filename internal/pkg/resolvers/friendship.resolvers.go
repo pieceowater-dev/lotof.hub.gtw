@@ -20,12 +20,12 @@ func (r *mutationResolver) AcceptFriendshipRequest(ctx context.Context, input mo
 	return r.FriendshipProvider.API.AcceptFriendshipRequest(input)
 }
 
-// RemoveFriendshipRequest is the resolver for the removeFriendshipRequest field.
-func (r *mutationResolver) RemoveFriendshipRequest(ctx context.Context, input model.RemoveFriendshipInput) (bool, error) {
-	return r.FriendshipProvider.API.RemoveFriendshipRequest(input)
+// RemoveFriendship is the resolver for the removeFriendshipRequest field.
+func (r *mutationResolver) RemoveFriendship(ctx context.Context, input model.RemoveFriendshipInput) (bool, error) {
+	return r.FriendshipProvider.API.RemoveFriendship(input)
 }
 
-// FriendshipRequestList is the resolver for the friendshipRequestList field.
-func (r *queryResolver) FriendshipRequestList(ctx context.Context, filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
-	return r.FriendshipProvider.API.FriendshipRequestList(filter)
+// FriendshipList is the resolver for the friendshipRequestList field.
+func (r *queryResolver) FriendshipList(ctx context.Context, filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
+	return r.FriendshipProvider.API.FriendshipList(filter)
 }
