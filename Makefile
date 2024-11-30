@@ -1,4 +1,4 @@
-APP_NAME = lotof.sample.gtw
+APP_NAME = lotof.hub.gtw
 BUILD_DIR = bin
 MAIN_FILE = cmd/server/main.go
 PROTOC = protoc
@@ -38,6 +38,7 @@ run: build
 clean:
 	rm -rf $(BUILD_DIR) gql-clean grpc-clean
 
+# gRPC code generation
 grpc-gen:
 	@echo "Generating gRPC code from proto files..."
 	mkdir -p $(PROTOC_OUT_DIR)
@@ -62,7 +63,7 @@ gql-gen:
 
 # Clean GQLGEN generated files
 gql-clean:
-	rm -rf internal/graph/generated.go internal/graph/model/models_gen.go
+	rm -rf internal/core/graph
 
 # Docker build target
 build-docker:

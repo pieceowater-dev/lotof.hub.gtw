@@ -3,21 +3,21 @@ package svc
 import (
 	"app/internal/core/cfg"
 	user "app/internal/core/grpc/generated"
-	"app/internal/core/transport"
 	"context"
 	"errors"
+	gossiper "github.com/pieceowater-dev/lotof.lib.gossiper/v2"
 	"log"
 )
 
 type UserService struct {
-	transport transport.Transport
+	transport gossiper.Transport
 	client    user.UserServiceClient // gRPC client
 }
 
 func NewUserService() *UserService {
-	factory := transport.NewFactory()
+	factory := gossiper.NewTransportFactory()
 	grpcTransport := factory.CreateTransport(
-		transport.GRPC,
+		gossiper.GRPC,
 		cfg.Inst().LotofHubMSvcUsersGrpcAddress,
 	)
 

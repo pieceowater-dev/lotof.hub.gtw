@@ -1,0 +1,52 @@
+# Friendship Type
+type Friendship {
+    id: ID!
+    userId: ID!
+    friendId: ID!
+    status: FriendshipStatus!
+}
+
+# Friendship Request Filter
+input FriendshipFilter {
+    userId: ID!
+    status: FriendshipStatus
+}
+
+# Friendship Status Enum
+enum FriendshipStatus {
+    PENDING
+    ACCEPTED
+    REJECTED
+}
+
+# Friendship Paginated List
+type PaginatedFriendshipList {
+    rows: [Friendship!]!
+    info: PaginationInfo!
+}
+
+# Input Types for Friendship Mutations
+input CreateFriendshipInput {
+    userId: ID!
+    friendId: ID!
+}
+
+input AcceptFriendshipInput {
+    friendshipId: ID!
+}
+
+input RemoveFriendshipInput {
+    friendshipId: ID!
+}
+
+# Friendship Queries
+extend type Query{
+    friendshipRequestList(filter: FriendshipFilter): PaginatedFriendshipList!
+}
+
+# Friendship Mutations
+extend type Mutation {
+    createFriendship(input: CreateFriendshipInput!): Friendship!
+    acceptFriendshipRequest(input: AcceptFriendshipInput!): Friendship!
+    removeFriendshipRequest(input: RemoveFriendshipInput!): Boolean!
+}

@@ -1,8 +1,8 @@
 package user
 
 import (
-	"app/internal/pkg/user/ctrl"
-	"app/internal/pkg/user/svc"
+	"app/internal/pkg/users/user/ctrl"
+	"app/internal/pkg/users/user/svc"
 )
 
 type Module struct {

@@ -1,0 +1,27 @@
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    password: String
+}
+
+input UserInput {
+    username: String!
+    email: String!
+    password: String!
+}
+
+type PaginatedUserList {
+    rows: [User!]!
+    info: PaginationInfo!
+}
+
+extend type Query {
+    users(filter: DefaultFilterInput): PaginatedUserList!
+    user(id: ID!): User
+}
+
+extend type Mutation {
+    createUser(input: UserInput!): User!
+    updateUser(id: ID!, input: UserInput!): User!
+}
