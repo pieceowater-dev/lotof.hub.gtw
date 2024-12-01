@@ -21,7 +21,7 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input mode
 
 // Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context, filter *model.DefaultFilterInput) (*model.PaginatedUserList, error) {
-	return r.UserProvider.API.Users()
+	return r.UserProvider.API.Users(filter)
 }
 
 // User is the resolver for the user field.
