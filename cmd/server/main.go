@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	// todo: make grpc server in parallel
 	// Initialize resolvers
 	resolvers := pkg.NewRouter().Init()
 
