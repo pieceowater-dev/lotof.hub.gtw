@@ -8,7 +8,8 @@ import (
 )
 
 type Config struct {
-	AppPort string
+	AppPort  string
+	GrpcPort string
 
 	SecretAccess  string
 	SecretRefresh string
@@ -29,7 +30,8 @@ func Inst() *Config {
 		}
 
 		instance = &Config{
-			AppPort: getEnv("APP_PORT", "8080"),
+			AppPort:  getEnv("APP_PORT", "8080"),
+			GrpcPort: getEnv("GRPC_PORT", "50051"),
 
 			SecretAccess:  getEnv("SECRET_ACCESS", "pieceosecret"),
 			SecretRefresh: getEnv("SECRET_REFRESH", "pieceosecret"),

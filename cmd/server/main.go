@@ -11,9 +11,22 @@ import (
 )
 
 func main() {
-	// todo: make grpc server in parallel
+	appCfg := cfg.Inst()
+	appRouter := pkg.NewRouter()
+
+	// if this gateway serves as grpc server somehow uncomment below
+	//serverManager := gossiper.NewServerManager()
+	//serverManager.AddServer(gossiper.NewGRPCServ(appCfg.GrpcPort, grpc.NewServer(), appRouter.InitGRPC))
+	//var wg sync.WaitGroup
+	//wg.Add(1)
+	//// Start gRPC servers in a goroutine
+	//go func() {
+	//	defer wg.Done()
+	//	serverManager.StartAll()
+	//}()
+
 	// Initialize resolvers
-	resolvers := pkg.NewRouter().Init()
+	resolvers := appRouter.Init()
 
 	// Create GraphQL server
 	srv := handler.NewDefaultServer(
@@ -29,5 +42,5 @@ func main() {
 	http.Handle("/query", srv)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", cfg.Inst().AppPort)
-	log.Fatal(http.ListenAndServe(":"+cfg.Inst().AppPort, nil))
+	log.Fatal(http.ListenAndServe(":"+appCfg.AppPort, nil))
 }
