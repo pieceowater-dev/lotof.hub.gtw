@@ -2,18 +2,6 @@ package generic
 
 import "app/internal/core/graph/model"
 
-type Pagination struct {
-	Page   int `json:"page"`
-	Length int `json:"length"`
-}
-
-func NewPagination(page, length int) Pagination {
-	return Pagination{
-		Page:   page,
-		Length: length,
-	}
-}
-
 func PaginationLengthToInt(length model.FilterPaginationLengthEnum) int32 {
 	switch length {
 	case model.FilterPaginationLengthEnumTen:
