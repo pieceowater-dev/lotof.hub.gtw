@@ -1,4 +1,3 @@
-# Friendship Type
 type Friendship {
     id: ID!
     userId: ID!
@@ -6,28 +5,24 @@ type Friendship {
     status: FriendshipStatus!
 }
 
-# Friendship Request Filter
 input FriendshipFilter {
     userId: ID!
     status: FriendshipStatus
 }
 
-# Friendship Status Enum
 enum FriendshipStatus {
     PENDING
     ACCEPTED
     REJECTED
 }
 
-# Friendship Paginated List
 type PaginatedFriendshipList {
     rows: [Friendship!]!
     info: PaginationInfo!
 }
 
-# Input Types for Friendship Mutations
 input CreateFriendshipInput {
-    userId: ID!
+    userId: ID! #todo: dont forget to verify userId with user auth token
     friendId: ID!
 }
 
@@ -39,7 +34,6 @@ input RemoveFriendshipInput {
     friendshipId: ID!
 }
 
-# Friendship Queries
 extend type Query{
     friendshipList(filter: FriendshipFilter): PaginatedFriendshipList!
 }
@@ -47,6 +41,6 @@ extend type Query{
 # Friendship Mutations
 extend type Mutation {
     createFriendship(input: CreateFriendshipInput!): Friendship!
-    acceptFriendshipRequest(input: AcceptFriendshipInput!): Friendship!
-    removeFriendship(input: RemoveFriendshipInput!): Boolean!
+    acceptFriendshipRequest(input: AcceptFriendshipInput!): Friendship! #makes FriendshipStatus eq ACCEPTED, only user that's eq friendId
+    removeFriendship(input: RemoveFriendshipInput!): Boolean! #soft deletes Friendship
 }

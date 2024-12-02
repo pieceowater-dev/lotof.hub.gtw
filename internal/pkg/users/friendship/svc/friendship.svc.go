@@ -3,14 +3,16 @@ package svc
 import (
 	"app/internal/core/cfg"
 	"app/internal/core/graph/model"
-	"app/internal/core/grpc/generated"
+	fr "app/internal/core/grpc/generated"
 	"context"
+	"errors"
 	gossiper "github.com/pieceowater-dev/lotof.lib.gossiper/v2"
 	"log"
 )
 
 type FriendshipService struct {
-	client generated.FriendshipServiceClient
+	transport gossiper.Transport
+	client    fr.FriendshipServiceClient
 }
 
 func NewFriendshipService() *FriendshipService {
@@ -20,34 +22,43 @@ func NewFriendshipService() *FriendshipService {
 		cfg.Inst().LotofHubMSvcUsersGrpcAddress,
 	)
 
-	clientConstructor := generated.NewFriendshipServiceClient
+	clientConstructor := fr.NewFriendshipServiceClient
 	client, err := grpcTransport.CreateClient(clientConstructor)
 	if err != nil {
 		log.Fatalf("Error creating client: %v", err)
 	}
 
 	return &FriendshipService{
-		client: client.(generated.FriendshipServiceClient),
+		transport: grpcTransport,
+		client:    client.(fr.FriendshipServiceClient),
 	}
 }
 
-func (s *FriendshipService) CreateFriendship(ctx context.Context, input *model.CreateFriendshipInput) (*model.Friendship, error) {
-	//return s.client.CreateFriendship(ctx, input)
+func (s *FriendshipService) CreateFriendship(input *fr.CreateFriendshipInput) (*fr.Friendship, error) {
+	ctx := context.Background()
+
+	response, err := s.transport.Send(ctx, s.client, "CreateFriendship", input)
+	if err != nil {
+		log.Printf("Error sending request: %v", err)
+		return nil, err
+	}
+
+	res, ok := response.(*fr.Friendship)
+	if !ok {
+		return nil, errors.New("invalid response type from gRPC transport")
+	}
+
+	return res, nil
+}
+
+func (s *FriendshipService) AcceptFriendshipRequest(input *model.AcceptFriendshipInput) (*model.Friendship, error) {
 	return nil, nil
 }
 
-func (s *FriendshipService) AcceptFriendshipRequest(ctx context.Context, input *model.AcceptFriendshipInput) (*model.Friendship, error) {
-	//return s.client.AcceptFriendshipRequest(ctx, input)
-	return nil, nil
-}
-
-func (s *FriendshipService) RemoveFriendship(ctx context.Context, input *model.RemoveFriendshipInput) error {
-	//_, err := s.client.RemoveFriendshipRequest(ctx, input)
-	//return err
+func (s *FriendshipService) RemoveFriendship(input *model.RemoveFriendshipInput) error {
 	return nil
 }
 
-func (s *FriendshipService) FriendshipList(ctx context.Context, filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
-	//return s.client.FriendshipRequestList(ctx, filter)
+func (s *FriendshipService) FriendshipList(filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
 	return nil, nil
 }

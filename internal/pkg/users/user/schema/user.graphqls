@@ -21,6 +21,6 @@ extend type Query {
 }
 
 extend type Mutation {
-    createUser(input: UserInput!): User!
+    createUser(input: UserInput!): User! #todo: restrict this method for usual users later. they create itself via registration
     updateUser(id: ID!, input: UserInput!): User!
 }

@@ -2,10 +2,8 @@ package pkg
 
 import (
 	resolvers "app/internal/pkg/resolvers"
-	"app/internal/pkg/users/auth"
 	"app/internal/pkg/users/friendship"
 	"app/internal/pkg/users/user"
-	"google.golang.org/grpc"
 )
 
 type Router struct{}
@@ -16,15 +14,15 @@ func NewRouter() *Router {
 
 func (r *Router) Init() *resolvers.Resolver {
 	return &resolvers.Resolver{
-		UserProvider:       user.NewUserModule(),
-		AuthProvider:       auth.NewAuthModule(),
+		UserProvider: user.NewUserModule(),
+		//AuthProvider:       auth.NewAuthModule(),
 		FriendshipProvider: friendship.NewFriendshipModule(),
 	}
 }
 
 // if this gateway serves as grpc server somehow uncomment below
-// InitGRPC initializes gRPC routes
-func (r *Router) InitGRPC(grpcServer *grpc.Server) {
-	// Register gRPC services
-	//pb.RegisterUserServiceServer(grpcServer, r.userModule.Controller)
-}
+//// InitGRPC initializes gRPC routes
+//func (r *Router) InitGRPC(grpcServer *grpc.Server) {
+//	// Register gRPC services
+//	//pb.RegisterUserServiceServer(grpcServer, r.userModule.Controller)
+//}

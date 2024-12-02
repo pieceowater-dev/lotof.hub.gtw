@@ -46,3 +46,16 @@ func PaginationLengthToInt(length model.FilterPaginationLengthEnum) int32 {
 		return 10
 	}
 }
+
+func IntToFriendshipStatus(stint int) model.FriendshipStatus {
+	switch stint {
+	case 100:
+		return model.FriendshipStatusPending
+	case 200:
+		return model.FriendshipStatusAccepted
+	case 300:
+		return model.FriendshipStatusRejected
+	default:
+		return model.FriendshipStatusPending
+	}
+}

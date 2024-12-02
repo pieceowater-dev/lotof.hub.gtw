@@ -109,25 +109,3 @@ func (s *UserService) UpdateUser(input *user.UpdateUserRequest) (*user.User, err
 
 	return res, nil
 }
-
-// DeleteUser deletes a user by ID and returns raw gRPC response.
-func (s *UserService) DeleteUser(id string) (*user.DeleteUserResponse, error) {
-	ctx := context.Background()
-
-	request := &user.DeleteUserRequest{
-		Id: id,
-	}
-
-	response, err := s.transport.Send(ctx, s.client, "DeleteUser", request)
-	if err != nil {
-		log.Printf("Error sending request: %v", err)
-		return nil, err
-	}
-
-	res, ok := response.(*user.DeleteUserResponse)
-	if !ok {
-		return nil, errors.New("invalid response type from gRPC transport")
-	}
-
-	return res, nil
-}
