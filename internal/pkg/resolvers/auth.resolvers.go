@@ -11,12 +11,11 @@ import (
 
 // Login is the resolver for the login field.
 func (r *mutationResolver) Login(ctx context.Context, input model.LoginRequest) (*model.AuthResponse, error) {
-	//return r.AuthProvider.API.Login(input)
-	return &model.AuthResponse{}, nil
+	return r.AuthProvider.API.Login(input)
+
 }
 
 // Register is the resolver for the register field.
 func (r *mutationResolver) Register(ctx context.Context, input model.RegisterRequest) (*model.AuthResponse, error) {
-	//return r.AuthProvider.API.Register(input)
-	return &model.AuthResponse{}, nil
+	return r.AuthProvider.API.Register(input)
 }

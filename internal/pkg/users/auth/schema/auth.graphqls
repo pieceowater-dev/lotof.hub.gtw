@@ -1,11 +1,11 @@
 input LoginRequest {
-    username: String!
+    email: String!
     password: String!
 }
 
 input RegisterRequest {
-    username: String!
     email: String!
+    username: String!
     password: String!
 }
 

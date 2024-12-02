@@ -11,9 +11,6 @@ type Config struct {
 	AppPort  string
 	GrpcPort string
 
-	SecretAccess  string
-	SecretRefresh string
-
 	LotofHubMSvcUsersGrpcAddress string
 }
 
@@ -32,9 +29,6 @@ func Inst() *Config {
 		instance = &Config{
 			AppPort:  getEnv("APP_PORT", "8080"),
 			GrpcPort: getEnv("GRPC_PORT", "50051"),
-
-			SecretAccess:  getEnv("SECRET_ACCESS", "pieceosecret"),
-			SecretRefresh: getEnv("SECRET_REFRESH", "pieceosecret"),
 
 			LotofHubMSvcUsersGrpcAddress: getEnv("LOTOF_HUB_USERS_SVC_GRPC_ADDRESS", "localhost:50051"),
 		}
