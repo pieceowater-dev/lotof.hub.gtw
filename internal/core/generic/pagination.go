@@ -59,3 +59,16 @@ func IntToFriendshipStatus(stint int) model.FriendshipStatus {
 		return model.FriendshipStatusPending
 	}
 }
+
+func FriendshipStatusToInt(st model.FriendshipStatus) int {
+	switch st {
+	case model.FriendshipStatusPending:
+		return 100
+	case model.FriendshipStatusAccepted:
+		return 200
+	case model.FriendshipStatusRejected:
+		return 300
+	default:
+		return 100
+	}
+}

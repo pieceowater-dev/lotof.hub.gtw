@@ -2,7 +2,6 @@ package svc
 
 import (
 	"app/internal/core/cfg"
-	"app/internal/core/graph/model"
 	fr "app/internal/core/grpc/generated"
 	"context"
 	"errors"
@@ -51,14 +50,54 @@ func (s *FriendshipService) CreateFriendship(input *fr.CreateFriendshipInput) (*
 	return res, nil
 }
 
-func (s *FriendshipService) AcceptFriendshipRequest(input *model.AcceptFriendshipInput) (*model.Friendship, error) {
-	return nil, nil
+func (s *FriendshipService) AcceptFriendshipRequest(input *fr.AcceptFriendshipInput) (*fr.Friendship, error) {
+	ctx := context.Background()
+
+	response, err := s.transport.Send(ctx, s.client, "AcceptFriendshipRequest", input)
+	if err != nil {
+		log.Printf("Error sending request: %v", err)
+		return nil, err
+	}
+
+	res, ok := response.(*fr.Friendship)
+	if !ok {
+		return nil, errors.New("invalid response type from gRPC transport")
+	}
+
+	return res, nil
 }
 
-func (s *FriendshipService) RemoveFriendship(input *model.RemoveFriendshipInput) error {
+func (s *FriendshipService) RemoveFriend(friendshipID string) error {
+	ctx := context.Background()
+	request := &fr.RemoveFriendshipInput{
+		FriendshipId: friendshipID,
+	}
+
+	// Make gRPC call
+	_, err := s.transport.Send(ctx, s.client, "RemoveFriendshipRequest", request)
+	if err != nil {
+		log.Printf("Error in RemoveFriendshipRequest gRPC call: %v", err)
+		return err
+	}
+
 	return nil
 }
 
-func (s *FriendshipService) FriendshipList(filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
-	return nil, nil
+func (s *FriendshipService) FriendshipList(filter *fr.FriendshipFilter) (*fr.PaginatedFriendshipList, error) {
+	ctx := context.Background()
+
+	// Sending the request to list friendships based on filter
+	response, err := s.transport.Send(ctx, s.client, "FriendshipRequestList", filter)
+	if err != nil {
+		log.Printf("Error sending request: %v", err)
+		return nil, err
+	}
+
+	// Check if the response is of the expected type
+	friendshipList, ok := response.(*fr.PaginatedFriendshipList)
+	if !ok {
+		return nil, errors.New("invalid response type from gRPC transport")
+	}
+
+	return friendshipList, nil
 }
