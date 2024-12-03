@@ -4,6 +4,9 @@ import (
 	"app/internal/core/cfg"
 	"app/internal/core/graph"
 	"app/internal/pkg"
+	"app/internal/pkg/users/auth/middleware"
+	"context"
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"log"
@@ -29,18 +32,19 @@ func main() {
 	resolvers := appRouter.Init()
 
 	// Create GraphQL server
-	srv := handler.NewDefaultServer(
-		graph.NewExecutableSchema(
-			graph.Config{
-				Resolvers: resolvers,
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{
+		Resolvers: resolvers,
+		Directives: graph.DirectiveRoot{
+			Auth: func(ctx context.Context, obj any, next graphql.Resolver) (any, error) {
+				return middleware.AuthDirective(ctx, next, resolvers.AuthProvider.API.VerifyToken)
 			},
-		),
-	)
+		},
+	}))
 
-	// Set up the HTTP routes
+	// Apply middleware to the GraphQL server
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", cfg.Inst().AppPort)
+	log.Printf("connect to http://localhost:%s/ for GraphQL playground", appCfg.AppPort)
 	log.Fatal(http.ListenAndServe(":"+appCfg.AppPort, nil))
 }

@@ -34,13 +34,12 @@ input RemoveFriendshipInput {
     friendshipId: ID!
 }
 
-extend type Query{
-    friendshipList(filter: FriendshipFilter): PaginatedFriendshipList!
+extend type Query {
+    friendshipList(filter: FriendshipFilter): PaginatedFriendshipList! @auth
 }
 
-# Friendship Mutations
 extend type Mutation {
-    createFriendship(input: CreateFriendshipInput!): Friendship!
-    acceptFriendshipRequest(input: AcceptFriendshipInput!): Friendship! #makes FriendshipStatus eq ACCEPTED, only user that's eq friendId
-    removeFriendship(input: RemoveFriendshipInput!): Boolean! #soft deletes Friendship
+    createFriendship(input: CreateFriendshipInput!): Friendship! @auth
+    acceptFriendshipRequest(input: AcceptFriendshipInput!): Friendship! @auth #makes FriendshipStatus eq ACCEPTED, only user that's eq friendId
+    removeFriendship(input: RemoveFriendshipInput!): Boolean! @auth #soft deletes Friendship
 }

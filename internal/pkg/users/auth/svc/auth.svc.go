@@ -5,6 +5,7 @@ import (
 	auth "app/internal/core/grpc/generated"
 	"context"
 	"errors"
+	"fmt"
 	gossiper "github.com/pieceowater-dev/lotof.lib.gossiper/v2"
 	"log"
 )
@@ -31,6 +32,25 @@ func NewAuthService() *AuthService {
 		transport: grpcTransport,
 		client:    client.(auth.AuthServiceClient),
 	}
+}
+
+func (s *AuthService) VerifyToken(token string) (*auth.ValidateTokenResponse, error) {
+	ctx := context.Background()
+	req := &auth.ValidateTokenRequest{
+		Token: token,
+	}
+
+	resp, err := s.client.ValidateToken(ctx, req)
+	if err != nil {
+		log.Printf("Error validating token: %v", err)
+		return nil, err
+	}
+
+	if !resp.Valid {
+		return nil, fmt.Errorf("token is invalid: %v", resp.Message)
+	}
+
+	return resp, nil
 }
 
 func (s *AuthService) Login(input *auth.LoginRequest) (*auth.AuthResponse, error) {

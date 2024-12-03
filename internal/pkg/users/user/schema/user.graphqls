@@ -16,11 +16,11 @@ type PaginatedUserList {
 }
 
 extend type Query {
-    users(filter: DefaultFilterInput): PaginatedUserList!
-    user(id: ID!): User
+    users(filter: DefaultFilterInput): PaginatedUserList! @auth
+    user(id: ID!): User @auth
 }
 
 extend type Mutation {
-    createUser(input: UserInput!): User! #todo: restrict this method for usual users later. they create itself via registration
-    updateUser(id: ID!, input: UserInput!): User!
+    createUser(input: UserInput!): User! @auth #todo: restrict this method for usual users later. they create itself via registration
+    updateUser(id: ID!, input: UserInput!): User! @auth
 }

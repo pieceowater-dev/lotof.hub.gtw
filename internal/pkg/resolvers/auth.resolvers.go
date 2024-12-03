@@ -12,7 +12,6 @@ import (
 // Login is the resolver for the login field.
 func (r *mutationResolver) Login(ctx context.Context, input model.LoginRequest) (*model.AuthResponse, error) {
 	return r.AuthProvider.API.Login(input)
-
 }
 
 // Register is the resolver for the register field.
