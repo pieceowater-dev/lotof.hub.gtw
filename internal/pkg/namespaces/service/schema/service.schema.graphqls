@@ -17,6 +17,7 @@ type PaginatedServiceList {
 
 extend type Query {
     services(filter: DefaultFilterInput): PaginatedServiceList! @auth
+    servicesByNamespace(nsId: ID!, filter: DefaultFilterInput): PaginatedServiceList! @auth
     service(id: ID!): Service @auth
 }
 

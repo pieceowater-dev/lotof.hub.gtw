@@ -6,17 +6,17 @@ type Member {
 
 input AddMemberToNamespaceInput {
     namespaceId: ID!
-    memberId: ID!
+    userId: ID!
 }
 
 input AddMemberToServiceInput {
     serviceId: ID!
-    memberId: ID!
+    userId: ID!
 }
 
 extend type Query {
     members(filter: DefaultFilterInput): [Member!]! @auth
-    member(id: ID!): Member @auth
+    member(membershipId: ID!): Member @auth
 }
 
 extend type Mutation {

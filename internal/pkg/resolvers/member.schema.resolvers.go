@@ -36,6 +36,6 @@ func (r *queryResolver) Members(ctx context.Context, filter *model.DefaultFilter
 }
 
 // Member is the resolver for the member field.
-func (r *queryResolver) Member(ctx context.Context, id string) (*model.Member, error) {
+func (r *queryResolver) Member(ctx context.Context, membershipID string) (*model.Member, error) {
 	panic(fmt.Errorf("not implemented: Member - member"))
 }

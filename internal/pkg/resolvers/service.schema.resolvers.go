@@ -30,6 +30,11 @@ func (r *queryResolver) Services(ctx context.Context, filter *model.DefaultFilte
 	panic(fmt.Errorf("not implemented: Services - services"))
 }
 
+// ServicesByNamespace is the resolver for the servicesByNamespace field.
+func (r *queryResolver) ServicesByNamespace(ctx context.Context, nsID string, filter *model.DefaultFilterInput) (*model.PaginatedServiceList, error) {
+	panic(fmt.Errorf("not implemented: ServicesByNamespace - servicesByNamespace"))
+}
+
 // Service is the resolver for the service field.
 func (r *queryResolver) Service(ctx context.Context, id string) (*model.Service, error) {
 	panic(fmt.Errorf("not implemented: Service - service"))
