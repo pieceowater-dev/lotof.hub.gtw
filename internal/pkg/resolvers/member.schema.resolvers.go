@@ -7,35 +7,34 @@ package graph
 import (
 	"app/internal/core/graph/model"
 	"context"
-	"fmt"
 )
 
 // AddMemberToNamespace is the resolver for the addMemberToNamespace field.
 func (r *mutationResolver) AddMemberToNamespace(ctx context.Context, input model.AddMemberToNamespaceInput) (*model.Namespace, error) {
-	panic(fmt.Errorf("not implemented: AddMemberToNamespace - addMemberToNamespace"))
+	return r.MemberProvider.API.AddMemberToNamespace(ctx, input)
 }
 
 // RemoveMemberFromNamespace is the resolver for the removeMemberFromNamespace field.
 func (r *mutationResolver) RemoveMemberFromNamespace(ctx context.Context, input model.AddMemberToNamespaceInput) (*model.Namespace, error) {
-	panic(fmt.Errorf("not implemented: RemoveMemberFromNamespace - removeMemberFromNamespace"))
+	return r.MemberProvider.API.RemoveMemberFromNamespace(ctx, input)
 }
 
 // AddMemberToService is the resolver for the addMemberToService field.
 func (r *mutationResolver) AddMemberToService(ctx context.Context, input model.AddMemberToServiceInput) (*model.Service, error) {
-	panic(fmt.Errorf("not implemented: AddMemberToService - addMemberToService"))
+	return r.MemberProvider.API.AddMemberToService(ctx, input)
 }
 
 // RemoveMemberFromService is the resolver for the removeMemberFromService field.
 func (r *mutationResolver) RemoveMemberFromService(ctx context.Context, input model.AddMemberToServiceInput) (*model.Service, error) {
-	panic(fmt.Errorf("not implemented: RemoveMemberFromService - removeMemberFromService"))
+	return r.MemberProvider.API.RemoveMemberFromService(ctx, input)
 }
 
 // Members is the resolver for the members field.
 func (r *queryResolver) Members(ctx context.Context, filter *model.DefaultFilterInput) ([]*model.Member, error) {
-	panic(fmt.Errorf("not implemented: Members - members"))
+	return r.MemberProvider.API.Members(ctx, filter)
 }
 
 // Member is the resolver for the member field.
 func (r *queryResolver) Member(ctx context.Context, membershipID string) (*model.Member, error) {
-	panic(fmt.Errorf("not implemented: Member - member"))
+	return r.MemberProvider.API.Member(ctx, membershipID)
 }

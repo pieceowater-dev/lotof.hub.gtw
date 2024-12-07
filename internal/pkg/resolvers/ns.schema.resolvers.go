@@ -7,30 +7,29 @@ package graph
 import (
 	"app/internal/core/graph/model"
 	"context"
-	"fmt"
 )
 
 // CreateNamespace is the resolver for the createNamespace field.
 func (r *mutationResolver) CreateNamespace(ctx context.Context, input model.NamespaceInput) (*model.Namespace, error) {
-	panic(fmt.Errorf("not implemented: CreateNamespace - createNamespace"))
+	return r.NSProvider.API.CreateNamespace(ctx, input)
 }
 
 // UpdateNamespace is the resolver for the updateNamespace field.
 func (r *mutationResolver) UpdateNamespace(ctx context.Context, id string, input model.NamespaceInput) (*model.Namespace, error) {
-	panic(fmt.Errorf("not implemented: UpdateNamespace - updateNamespace"))
+	return r.NSProvider.API.UpdateNamespace(ctx, id, input)
 }
 
 // DeleteNamespace is the resolver for the deleteNamespace field.
 func (r *mutationResolver) DeleteNamespace(ctx context.Context, id string) (bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteNamespace - deleteNamespace"))
+	return r.NSProvider.API.DeleteNamespace(ctx, id)
 }
 
 // Namespaces is the resolver for the namespaces field.
 func (r *queryResolver) Namespaces(ctx context.Context, filter *model.DefaultFilterInput) (*model.PaginatedNamespaceList, error) {
-	panic(fmt.Errorf("not implemented: Namespaces - namespaces"))
+	return r.NSProvider.API.Namespaces(ctx, filter)
 }
 
 // Namespace is the resolver for the namespace field.
 func (r *queryResolver) Namespace(ctx context.Context, id string) (*model.Namespace, error) {
-	panic(fmt.Errorf("not implemented: Namespace - namespace"))
+	return r.NSProvider.API.Namespace(ctx, id)
 }

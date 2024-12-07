@@ -12,27 +12,27 @@ import (
 
 // CreateService is the resolver for the createService field.
 func (r *mutationResolver) CreateService(ctx context.Context, input model.ServiceInput) (*model.Service, error) {
-	panic(fmt.Errorf("not implemented: CreateService - createService"))
+	return r.ServiceProvider.API.CreateService(ctx, input)
 }
 
 // UpdateService is the resolver for the updateService field.
 func (r *mutationResolver) UpdateService(ctx context.Context, id string, input model.ServiceInput) (*model.Service, error) {
-	panic(fmt.Errorf("not implemented: UpdateService - updateService"))
+	return r.ServiceProvider.API.UpdateService(ctx, id, input)
 }
 
 // DeleteService is the resolver for the deleteService field.
 func (r *mutationResolver) DeleteService(ctx context.Context, id string) (bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteService - deleteService"))
+	return r.ServiceProvider.API.DeleteService(ctx, id)
 }
 
 // Services is the resolver for the services field.
 func (r *queryResolver) Services(ctx context.Context, filter *model.DefaultFilterInput) (*model.PaginatedServiceList, error) {
-	panic(fmt.Errorf("not implemented: Services - services"))
+	return r.ServiceProvider.API.Services(ctx, filter)
 }
 
 // ServicesByNamespace is the resolver for the servicesByNamespace field.
 func (r *queryResolver) ServicesByNamespace(ctx context.Context, nsID string, filter *model.DefaultFilterInput) (*model.PaginatedServiceList, error) {
-	panic(fmt.Errorf("not implemented: ServicesByNamespace - servicesByNamespace"))
+	return r.ServiceProvider.API.ServicesByNamespace(ctx, nsID, filter)
 }
 
 // Service is the resolver for the service field.
