@@ -1,0 +1,28 @@
+type Member {
+    id: ID!
+    namespaces: [Namespace!]!
+    services: [Service!]!
+}
+
+input AddMemberToNamespaceInput {
+    namespaceId: ID!
+    memberId: ID!
+}
+
+input AddMemberToServiceInput {
+    serviceId: ID!
+    memberId: ID!
+}
+
+extend type Query {
+    members(filter: DefaultFilterInput): [Member!]! @auth
+    member(id: ID!): Member @auth
+}
+
+extend type Mutation {
+    addMemberToNamespace(input: AddMemberToNamespaceInput!): Namespace! @auth
+    removeMemberFromNamespace(input: AddMemberToNamespaceInput!): Namespace! @auth
+
+    addMemberToService(input: AddMemberToServiceInput!): Service! @auth
+    removeMemberFromService(input: AddMemberToServiceInput!): Service! @auth
+}

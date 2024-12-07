@@ -1,0 +1,31 @@
+type Namespace {
+    id: ID!
+    title: String!
+    slug: String!
+    description: String
+    owner: ID! # User ID
+    services: [Service!]!
+    members: [Member!]!
+}
+
+input NamespaceInput {
+    title: String!
+    slug: String!
+    description: String
+}
+
+type PaginatedNamespaceList {
+    rows: [Namespace!]!
+    info: PaginationInfo!
+}
+
+extend type Query {
+    namespaces(filter: DefaultFilterInput): PaginatedNamespaceList! @auth
+    namespace(id: ID!): Namespace @auth
+}
+
+extend type Mutation {
+    createNamespace(input: NamespaceInput!): Namespace! @auth
+    updateNamespace(id: ID!, input: NamespaceInput!): Namespace! @auth
+    deleteNamespace(id: ID!): Boolean! @auth # Soft-delete or enforce CASCADE rules
+}

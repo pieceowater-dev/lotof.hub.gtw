@@ -1,0 +1,27 @@
+type Service {
+    id: ID!
+    app: String!
+    namespace: Namespace!
+    members: [Member!]!
+}
+
+input ServiceInput {
+    app: String!
+    namespaceId: ID!
+}
+
+type PaginatedServiceList {
+    rows: [Service!]!
+    info: PaginationInfo!
+}
+
+extend type Query {
+    services(filter: DefaultFilterInput): PaginatedServiceList! @auth
+    service(id: ID!): Service @auth
+}
+
+extend type Mutation {
+    createService(input: ServiceInput!): Service! @auth
+    updateService(id: ID!, input: ServiceInput!): Service! @auth
+    deleteService(id: ID!): Boolean! @auth # Soft-delete or enforce CASCADE rules
+}
