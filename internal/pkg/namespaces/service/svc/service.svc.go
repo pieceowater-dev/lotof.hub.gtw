@@ -2,13 +2,14 @@ package svc
 
 import (
 	"app/internal/core/cfg"
-	//service "app/internal/core/grpc/generated"
+	service "app/internal/core/grpc/generated"
 	gossiper "github.com/pieceowater-dev/lotof.lib.gossiper/v2"
+	"log"
 )
 
 type ServiceService struct {
 	transport gossiper.Transport
-	//client    service.ServiceServiceClient // gRPC client
+	client    service.ServiceServiceClient // gRPC client
 }
 
 func NewServiceService() *ServiceService {
@@ -19,14 +20,14 @@ func NewServiceService() *ServiceService {
 	)
 
 	// Create the client once and store it as a property
-	//clientConstructor := service.NewServiceServiceClient
-	//client, err := grpcTransport.CreateClient(clientConstructor)
-	//if err != nil {
-	//	log.Fatalf("Error creating client: %v", err)
-	//}
+	clientConstructor := service.NewServiceServiceClient
+	client, err := grpcTransport.CreateClient(clientConstructor)
+	if err != nil {
+		log.Fatalf("Error creating client: %v", err)
+	}
 
 	return &ServiceService{
 		transport: grpcTransport,
-		//client:    client.(service.ServiceServiceClient), // Cast to the correct type
+		client:    client.(service.ServiceServiceClient), // Cast to the correct type
 	}
 }
