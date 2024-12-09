@@ -1,12 +1,11 @@
 package graph
 
 import (
-	"app/internal/pkg/namespaces/member"
-	"app/internal/pkg/namespaces/ns"
-	"app/internal/pkg/namespaces/service"
-	"app/internal/pkg/users/auth"
-	"app/internal/pkg/users/friendship"
-	"app/internal/pkg/users/user"
+	"app/internal/pkg/msvc.namespaces/member"
+	"app/internal/pkg/msvc.namespaces/ns"
+	"app/internal/pkg/msvc.users/auth"
+	"app/internal/pkg/msvc.users/friendship"
+	"app/internal/pkg/msvc.users/user"
 )
 
 // This file will not be regenerated automatically.
@@ -18,7 +17,6 @@ type Resolver struct {
 	AuthProvider       auth.Module
 	FriendshipProvider friendship.Module
 
-	NSProvider      ns.Module
-	MemberProvider  member.Module
-	ServiceProvider service.Module
+	NSProvider     ns.Module
+	MemberProvider member.Module
 }

@@ -1,0 +1,25 @@
+extend type Query {
+    members(filter: MembersFilter): [Member!]! @auth
+    member(membershipId: ID!): Member @auth
+}
+
+extend type Mutation {
+    addMemberToNamespace(input: MemberToNamespaceInput!): Namespace! @auth
+    removeMemberFromNamespace(input: MemberToNamespaceInput!): Namespace! @auth
+}
+
+
+type Member {
+    id: ID!
+    userId: ID!
+}
+
+input MemberToNamespaceInput {
+    namespaceId: ID!
+    userId: ID!
+}
+
+input MembersFilter {
+    namespaceId: ID
+    filter: DefaultFilterInput
+}

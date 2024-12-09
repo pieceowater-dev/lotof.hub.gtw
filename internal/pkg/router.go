@@ -1,13 +1,12 @@
 package pkg
 
 import (
-	"app/internal/pkg/namespaces/member"
-	"app/internal/pkg/namespaces/ns"
-	"app/internal/pkg/namespaces/service"
+	"app/internal/pkg/msvc.namespaces/member"
+	"app/internal/pkg/msvc.namespaces/ns"
+	"app/internal/pkg/msvc.users/auth"
+	"app/internal/pkg/msvc.users/friendship"
+	"app/internal/pkg/msvc.users/user"
 	resolvers "app/internal/pkg/resolvers"
-	"app/internal/pkg/users/auth"
-	"app/internal/pkg/users/friendship"
-	"app/internal/pkg/users/user"
 )
 
 type Router struct{}
@@ -22,9 +21,8 @@ func (r *Router) Init() *resolvers.Resolver {
 		AuthProvider:       auth.NewAuthModule(),
 		FriendshipProvider: friendship.NewFriendshipModule(),
 
-		NSProvider:      ns.NewNSModule(),
-		MemberProvider:  member.NewMemberModule(),
-		ServiceProvider: service.NewServiceModule(),
+		NSProvider:     ns.NewNSModule(),
+		MemberProvider: member.NewMemberModule(),
 	}
 }
 

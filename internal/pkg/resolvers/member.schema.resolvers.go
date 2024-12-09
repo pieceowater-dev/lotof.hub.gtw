@@ -10,27 +10,17 @@ import (
 )
 
 // AddMemberToNamespace is the resolver for the addMemberToNamespace field.
-func (r *mutationResolver) AddMemberToNamespace(ctx context.Context, input model.AddMemberToNamespaceInput) (*model.Namespace, error) {
+func (r *mutationResolver) AddMemberToNamespace(ctx context.Context, input model.MemberToNamespaceInput) (*model.Namespace, error) {
 	return r.MemberProvider.API.AddMemberToNamespace(ctx, input)
 }
 
 // RemoveMemberFromNamespace is the resolver for the removeMemberFromNamespace field.
-func (r *mutationResolver) RemoveMemberFromNamespace(ctx context.Context, input model.AddMemberToNamespaceInput) (*model.Namespace, error) {
+func (r *mutationResolver) RemoveMemberFromNamespace(ctx context.Context, input model.MemberToNamespaceInput) (*model.Namespace, error) {
 	return r.MemberProvider.API.RemoveMemberFromNamespace(ctx, input)
 }
 
-// AddMemberToService is the resolver for the addMemberToService field.
-func (r *mutationResolver) AddMemberToService(ctx context.Context, input model.AddMemberToServiceInput) (*model.Service, error) {
-	return r.MemberProvider.API.AddMemberToService(ctx, input)
-}
-
-// RemoveMemberFromService is the resolver for the removeMemberFromService field.
-func (r *mutationResolver) RemoveMemberFromService(ctx context.Context, input model.AddMemberToServiceInput) (*model.Service, error) {
-	return r.MemberProvider.API.RemoveMemberFromService(ctx, input)
-}
-
 // Members is the resolver for the members field.
-func (r *queryResolver) Members(ctx context.Context, filter *model.DefaultFilterInput) ([]*model.Member, error) {
+func (r *queryResolver) Members(ctx context.Context, filter *model.MembersFilter) ([]*model.Member, error) {
 	return r.MemberProvider.API.Members(ctx, filter)
 }
 

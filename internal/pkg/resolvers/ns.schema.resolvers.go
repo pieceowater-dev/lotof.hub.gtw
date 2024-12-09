@@ -16,12 +16,7 @@ func (r *mutationResolver) CreateNamespace(ctx context.Context, input model.Name
 
 // UpdateNamespace is the resolver for the updateNamespace field.
 func (r *mutationResolver) UpdateNamespace(ctx context.Context, id string, input model.NamespaceInput) (*model.Namespace, error) {
-	return r.NSProvider.API.UpdateNamespace(ctx, id, input)
-}
-
-// DeleteNamespace is the resolver for the deleteNamespace field.
-func (r *mutationResolver) DeleteNamespace(ctx context.Context, id string) (bool, error) {
-	return r.NSProvider.API.DeleteNamespace(ctx, id)
+	return r.NSProvider.API.UpdateNamespace(ctx, input)
 }
 
 // Namespaces is the resolver for the namespaces field.

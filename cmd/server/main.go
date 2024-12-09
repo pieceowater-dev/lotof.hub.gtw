@@ -4,7 +4,7 @@ import (
 	"app/internal/core/cfg"
 	"app/internal/core/graph"
 	"app/internal/pkg"
-	"app/internal/pkg/users/auth/middleware"
+	"app/internal/pkg/msvc.users/auth/middleware"
 	"context"
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"

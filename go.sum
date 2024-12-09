@@ -89,8 +89,8 @@ github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9G
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
 github.com/pelletier/go-toml/v2 v2.2.2 h1:aYUidT7k73Pcl9nb2gScu7NSrKCSHIDE89b3+6Wq+LM=
 github.com/pelletier/go-toml/v2 v2.2.2/go.mod h1:1t835xjRzz80PqgE6HHgN2JOsmgYu/h4qDAS4n929Rs=
-github.com/pieceowater-dev/lotof.hub.proto v0.0.32 h1:5w/rZ0H6Dee3zdm6WJjIa51A8IkH3ui708xzbvY0mYY=
-github.com/pieceowater-dev/lotof.hub.proto v0.0.32/go.mod h1:9uwfvIUGGzTrTIVzQ4gH8hmrRC8sgtnLUhyPN5swIME=
+github.com/pieceowater-dev/lotof.hub.proto v0.0.35 h1:QF0fBCQVPCOVnxzibCQAU3OIIBmG5wJ1W1hfTviB5uY=
+github.com/pieceowater-dev/lotof.hub.proto v0.0.35/go.mod h1:9uwfvIUGGzTrTIVzQ4gH8hmrRC8sgtnLUhyPN5swIME=
 github.com/pieceowater-dev/lotof.lib.gossiper/v2 v2.0.6 h1:5WEnZAd/hwMDAL8sVUoL+zO4wWeQetVO4Zo+NgxzC80=
 github.com/pieceowater-dev/lotof.lib.gossiper/v2 v2.0.6/go.mod h1:m/C+3z+Y2n9FPnakJl7jOl/4T1KfrE2/OhSslRKAGGc=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
