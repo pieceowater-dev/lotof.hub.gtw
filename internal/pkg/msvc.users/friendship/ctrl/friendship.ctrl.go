@@ -71,6 +71,13 @@ func (c *FriendshipController) RemoveFriendship(input model.RemoveFriendshipInpu
 }
 
 func (c *FriendshipController) FriendshipList(filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
+	// Default to FriendshipStatusAccepted if Status is nil
+	if filter.Status == nil {
+		// Create a variable and take the address of it
+		status := model.FriendshipStatusAccepted
+		filter.Status = &status
+	}
+
 	// Mapping the filter to gRPC model for pagination, search, and sorting
 	request := &fr.FriendshipFilter{
 		UserId: filter.UserID,
