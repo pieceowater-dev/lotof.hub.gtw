@@ -3,6 +3,7 @@ package ctrl
 import (
 	"app/internal/core/graph/model"
 	auth "app/internal/core/grpc/generated"
+	ns "app/internal/pkg/msvc.namespaces/ns/svc"
 	"app/internal/pkg/msvc.users/auth/svc"
 	"context"
 	"log"
@@ -10,10 +11,11 @@ import (
 
 type AuthController struct {
 	authService *svc.AuthService
+	nsService   *ns.NSService
 }
 
-func NewAuthController(service *svc.AuthService) *AuthController {
-	return &AuthController{authService: service}
+func NewAuthController(service *svc.AuthService, namespaceService *ns.NSService) *AuthController {
+	return &AuthController{authService: service, nsService: namespaceService}
 }
 
 func (c *AuthController) VerifyToken(t string) (bool, *model.User, error) {
@@ -66,7 +68,18 @@ func (c *AuthController) Register(ctx context.Context, input model.RegisterReque
 
 	register, err := c.authService.Register(request)
 	if err != nil {
-		log.Printf("Error login: %v", err)
+		log.Printf("Error: %v", err)
+		return nil, err
+	}
+
+	_, err = c.nsService.CreateNamespace(&auth.NamespaceRequest{
+		Title:       register.User.Username,
+		Slug:        register.User.Username,
+		Description: "",
+		//pass ns owner id also
+	})
+	if err != nil {
+		log.Printf("Error: %v", err)
 		return nil, err
 	}
 
