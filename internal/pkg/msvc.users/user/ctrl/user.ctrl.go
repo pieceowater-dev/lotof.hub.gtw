@@ -5,6 +5,7 @@ import (
 	"app/internal/core/graph/model"
 	user "app/internal/core/grpc/generated"
 	"app/internal/pkg/msvc.users/user/svc"
+	"context"
 	"log"
 )
 
@@ -17,7 +18,7 @@ func NewUserController(service *svc.UserService) *UserController {
 }
 
 // Users retrieves a list of users and converts raw data to a paginated model.
-func (c *UserController) Users(filter *model.DefaultFilterInput) (*model.PaginatedUserList, error) {
+func (c *UserController) Users(ctx context.Context, filter *model.DefaultFilterInput) (*model.PaginatedUserList, error) {
 	request := &user.GetUsersRequest{
 		Search:     "",
 		Pagination: &user.Pagination{},
@@ -64,7 +65,7 @@ func (c *UserController) Users(filter *model.DefaultFilterInput) (*model.Paginat
 }
 
 // CreateUser handles creating a new user.
-func (c *UserController) CreateUser(input model.UserInput) (*model.User, error) {
+func (c *UserController) CreateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
 	request := &user.CreateUserRequest{
 		Username: input.Username,
 		Email:    input.Email,
@@ -85,7 +86,7 @@ func (c *UserController) CreateUser(input model.UserInput) (*model.User, error) 
 }
 
 // FindOneUser retrieves a single user by ID.
-func (c *UserController) FindOneUser(id string) (*model.User, error) {
+func (c *UserController) FindOneUser(ctx context.Context, id string) (*model.User, error) {
 	oneUser, err := c.userService.FindOneUser(id)
 	if err != nil {
 		log.Printf("Error fetching oneUser: %v", err)
@@ -100,7 +101,7 @@ func (c *UserController) FindOneUser(id string) (*model.User, error) {
 }
 
 // UpdateUser updates a user by ID.
-func (c *UserController) UpdateUser(id string, input *model.UserInput) (*model.User, error) {
+func (c *UserController) UpdateUser(ctx context.Context, id string, input *model.UserInput) (*model.User, error) {
 	request := &user.UpdateUserRequest{
 		Id:       id,
 		Username: input.Username,

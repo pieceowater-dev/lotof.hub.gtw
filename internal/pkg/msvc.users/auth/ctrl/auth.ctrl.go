@@ -4,6 +4,7 @@ import (
 	"app/internal/core/graph/model"
 	auth "app/internal/core/grpc/generated"
 	"app/internal/pkg/msvc.users/auth/svc"
+	"context"
 	"log"
 )
 
@@ -34,7 +35,7 @@ func (c *AuthController) VerifyToken(t string) (bool, *model.User, error) {
 	}, nil
 }
 
-func (c *AuthController) Login(input model.LoginRequest) (*model.AuthResponse, error) {
+func (c *AuthController) Login(ctx context.Context, input model.LoginRequest) (*model.AuthResponse, error) {
 	request := &auth.LoginRequest{
 		Email:    input.Email,
 		Password: input.Password,
@@ -56,7 +57,7 @@ func (c *AuthController) Login(input model.LoginRequest) (*model.AuthResponse, e
 	}, nil
 }
 
-func (c *AuthController) Register(input model.RegisterRequest) (*model.AuthResponse, error) {
+func (c *AuthController) Register(ctx context.Context, input model.RegisterRequest) (*model.AuthResponse, error) {
 	request := &auth.RegisterRequest{
 		Email:    input.Email,
 		Username: input.Username,
