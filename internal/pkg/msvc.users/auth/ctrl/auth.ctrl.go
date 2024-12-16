@@ -28,7 +28,7 @@ func (c *AuthController) VerifyToken(t string) (bool, *model.User, error) {
 		log.Printf("Token message: %v", data.Message)
 	}
 
-	log.Printf("Current user: %+v", data.User.Username)
+	log.Printf("User: %+v", data.User.Username)
 
 	return data.Valid, &model.User{
 		ID:       data.User.Id,

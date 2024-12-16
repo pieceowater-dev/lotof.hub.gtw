@@ -40,17 +40,22 @@ func (s *AuthService) VerifyToken(token string) (*auth.ValidateTokenResponse, er
 		Token: token,
 	}
 
-	resp, err := s.client.ValidateToken(ctx, req)
+	//resp, err := s.client.ValidateToken(ctx, req)
+	resp, err := s.transport.Send(ctx, s.client, "ValidateToken", req)
 	if err != nil {
 		log.Printf("Error validating token: %v", err)
 		return nil, err
 	}
-
-	if !resp.Valid {
-		return nil, fmt.Errorf("token is invalid: %v", resp.Message)
+	res, ok := resp.(*auth.ValidateTokenResponse)
+	if !ok {
+		return nil, errors.New("invalid response type from gRPC transport")
 	}
 
-	return resp, nil
+	if !res.Valid {
+		return nil, fmt.Errorf("token is invalid: %v", res.Message)
+	}
+
+	return res, nil
 }
 
 func (s *AuthService) Login(input *auth.LoginRequest) (*auth.AuthResponse, error) {
