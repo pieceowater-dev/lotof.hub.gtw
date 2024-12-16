@@ -28,8 +28,6 @@ func (c *AuthController) VerifyToken(t string) (bool, *model.User, error) {
 		log.Printf("Token message: %v", data.Message)
 	}
 
-	log.Printf("User: %+v", data.User.Username)
-
 	return data.Valid, &model.User{
 		ID:       data.User.Id,
 		Username: data.User.Username,
@@ -76,7 +74,7 @@ func (c *AuthController) Register(ctx context.Context, input model.RegisterReque
 		Title:       register.User.Username,
 		Slug:        register.User.Username,
 		Description: "",
-		//pass ns owner id also
+		//todo: pass ns owner id also
 	})
 	if err != nil {
 		log.Printf("Error: %v", err)

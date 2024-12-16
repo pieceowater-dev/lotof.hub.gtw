@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"github.com/99designs/gqlgen/graphql"
+	"log"
 )
 
 type contextKey string
@@ -26,6 +27,8 @@ func AuthDirective(ctx context.Context, next graphql.Resolver, verifyTokenFunc f
 	if err != nil || !valid || user == nil {
 		return nil, errors.New("unauthorized: token is invalid or user not found")
 	}
+
+	log.Print("User:", user.ID, user.Username)
 
 	newCtx := context.WithValue(ctx, TokenContextKey, user)
 
