@@ -19,6 +19,11 @@ func (r *mutationResolver) UpdateNamespace(ctx context.Context, id string, input
 	return r.NSProvider.API.UpdateNamespace(ctx, input)
 }
 
+// AddAppToNamespace is the resolver for the addAppToNamespace field.
+func (r *mutationResolver) AddAppToNamespace(ctx context.Context, namespaceID string, appBundle string) (*model.NamespaceApp, error) {
+	return r.NSProvider.API.AddAppToNamespace(ctx, namespaceID, appBundle)
+}
+
 // Namespaces is the resolver for the namespaces field.
 func (r *queryResolver) Namespaces(ctx context.Context, filter *model.DefaultFilterInput) (*model.PaginatedNamespaceList, error) {
 	return r.NSProvider.API.Namespaces(ctx, filter)

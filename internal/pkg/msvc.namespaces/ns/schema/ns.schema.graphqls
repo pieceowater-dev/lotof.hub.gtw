@@ -6,6 +6,7 @@ extend type Query {
 extend type Mutation {
     createNamespace(input: NamespaceInput!): Namespace! @auth
     updateNamespace(id: ID!, input: NamespaceInput!): Namespace! @auth
+    addAppToNamespace(namespaceId: ID!, appBundle: String!): NamespaceApp! @auth
 }
 
 type Namespace {
@@ -26,4 +27,10 @@ input NamespaceInput {
 type PaginatedNamespaceList {
     rows: [Namespace!]!
     info: PaginationInfo!
+}
+
+type NamespaceApp {
+    id: ID!
+    namespaceID: ID!
+    appBundle: String!
 }

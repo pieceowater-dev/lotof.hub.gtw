@@ -139,3 +139,24 @@ func (c *NSController) Namespace(
 		Owner:       res.Owner,
 	}, nil
 }
+
+func (c *NSController) AddAppToNamespace(
+	_ context.Context,
+	namespaceID string,
+	appBundle string,
+) (*model.NamespaceApp, error) {
+	request := &ns.AddAppToNamespaceRequest{
+		NamespaceId: namespaceID,
+		AppBundle:   appBundle,
+	}
+	res, err := c.nsService.AddAppToNamespace(request)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.NamespaceApp{
+		ID:          res.Id,
+		NamespaceID: res.NamespaceId,
+		AppBundle:   res.AppBundle,
+	}, nil
+}
