@@ -21,10 +21,14 @@ func (c *NSController) CreateNamespace(
 	_ context.Context,
 	input model.NamespaceInput,
 ) (*model.Namespace, error) {
+	nsDesc := ""
+	if input.Description != nil {
+		nsDesc = *input.Description
+	}
 	request := &ns.NamespaceRequest{
 		Title:       input.Title,
 		Slug:        input.Slug,
-		Description: *input.Description,
+		Description: nsDesc,
 	}
 	res, err := c.nsService.CreateNamespace(request)
 	if err != nil {
