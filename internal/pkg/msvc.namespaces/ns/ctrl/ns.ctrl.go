@@ -4,6 +4,7 @@ import (
 	"app/internal/core/generic"
 	"app/internal/core/graph/model"
 	ns "app/internal/core/grpc/generated"
+	pb "app/internal/core/grpc/generated"
 	"app/internal/pkg/msvc.namespaces/ns/svc"
 	"context"
 	"log"
@@ -11,6 +12,7 @@ import (
 
 type NSController struct {
 	nsService *svc.NSService
+	pb.UnimplementedGatewayServiceServer
 }
 
 func NewNSController(service *svc.NSService) *NSController {
@@ -158,5 +160,27 @@ func (c *NSController) AddAppToNamespace(
 		ID:          res.Id,
 		NamespaceID: res.NamespaceId,
 		AppBundle:   res.AppBundle,
+	}, nil
+}
+
+func (c *NSController) GatewayNamespacesByApp(_ context.Context, request *pb.GatewayNamespacesByAppRequest) (*pb.GatewayNamespacesByAppResponse, error) {
+	req := &ns.NamespacesByAppRequest{
+		AppBundle: request.AppBundle,
+	}
+	res, err := c.nsService.NamespacesByApp(req)
+	if err != nil {
+		return nil, err
+	}
+
+	var tenants []*pb.GatewayEncryptedTenant
+	for _, tenant := range res.Tenants {
+		tenants = append(tenants, &pb.GatewayEncryptedTenant{
+			Namespace:   tenant.Namespace,
+			Credentials: tenant.Credentials,
+		})
+	}
+
+	return &pb.GatewayNamespacesByAppResponse{
+		Tenants: tenants,
 	}, nil
 }

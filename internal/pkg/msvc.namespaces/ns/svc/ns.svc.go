@@ -108,3 +108,16 @@ func (s *NSService) AddAppToNamespace(input *ns.AddAppToNamespaceRequest) (*ns.N
 
 	return res, nil
 }
+
+func (s *NSService) NamespacesByApp(input *ns.NamespacesByAppRequest) (*ns.NamespacesByAppResponse, error) {
+	ctx := context.Background()
+	response, err := s.transport.Send(ctx, s.client, "NamespacesByApp", input)
+	if err != nil {
+		log.Printf("Error sending request: %v", err)
+	}
+	res, ok := response.(*ns.NamespacesByAppResponse)
+	if !ok {
+		return nil, errors.New("invalid response type from gRPC transport")
+	}
+	return res, nil
+}

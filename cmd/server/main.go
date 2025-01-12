@@ -9,24 +9,30 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	gossiper "github.com/pieceowater-dev/lotof.lib.gossiper/v2"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
 	"net/http"
+	"sync"
 )
 
 func main() {
+	//todo: clean up later
 	appCfg := cfg.Inst()
 	appRouter := pkg.NewRouter()
 
-	// if this gateway serves as grpc server somehow uncomment below
-	//serverManager := gossiper.NewServerManager()
-	//serverManager.AddServer(gossiper.NewGRPCServ(appCfg.GrpcPort, grpc.NewServer(), appRouter.InitGRPC))
-	//var wg sync.WaitGroup
-	//wg.Add(1)
-	//// Start gRPC servers in a goroutine
-	//go func() {
-	//	defer wg.Done()
-	//	serverManager.StartAll()
-	//}()
+	serverManager := gossiper.NewServerManager()
+	grpcServ := grpc.NewServer()
+	reflection.Register(grpcServ)
+	serverManager.AddServer(gossiper.NewGRPCServ(appCfg.GrpcPort, grpcServ, appRouter.InitGRPC))
+	var wg sync.WaitGroup
+	wg.Add(1)
+	// Start gRPC servers in a goroutine
+	go func() {
+		defer wg.Done()
+		serverManager.StartAll()
+	}()
 
 	// Initialize resolvers
 	resolvers := appRouter.Init()
