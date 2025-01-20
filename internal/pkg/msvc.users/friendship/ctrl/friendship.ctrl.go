@@ -1,10 +1,13 @@
 package ctrl
 
 import (
-	"app/internal/core/generic"
+	"app/internal/core/generic/utils"
 	"app/internal/core/graph/model"
-	fr "app/internal/core/grpc/generated"
+	fr "app/internal/core/grpc/generated/lotof.hub.msvc.users/friendship"
 	"app/internal/pkg/msvc.users/friendship/svc"
+
+	//fr "app/internal/core/grpc/generated/lotof.hub.msvc.users/friendship"
+	//"app/internal/pkg/msvc.users/friendship/svc"
 	"log"
 )
 
@@ -32,7 +35,7 @@ func (c *FriendshipController) CreateFriendship(input model.CreateFriendshipInpu
 		ID:       createFriendship.Id,
 		UserID:   createFriendship.User.Id,
 		FriendID: createFriendship.Friend.Id,
-		Status:   generic.IntToFriendshipStatus(int(createFriendship.Status)),
+		Status:   utils.IntToFriendshipStatus(int(createFriendship.Status)),
 	}, nil
 }
 
@@ -50,7 +53,7 @@ func (c *FriendshipController) AcceptFriendshipRequest(input model.AcceptFriends
 		ID:       acceptFriendship.Id,
 		UserID:   acceptFriendship.User.Id,
 		FriendID: acceptFriendship.Friend.Id,
-		Status:   generic.IntToFriendshipStatus(int(acceptFriendship.Status)),
+		Status:   utils.IntToFriendshipStatus(int(acceptFriendship.Status)),
 	}, nil
 }
 
@@ -81,7 +84,7 @@ func (c *FriendshipController) FriendshipList(filter *model.FriendshipFilter) (*
 	// Mapping the filter to gRPC model for pagination, search, and sorting
 	request := &fr.FriendshipFilter{
 		UserId: filter.UserID,
-		Status: uint32(generic.FriendshipStatusToInt(*filter.Status)),
+		Status: uint32(utils.FriendshipStatusToInt(*filter.Status)),
 	}
 
 	// Calling the service to get the friendship list
@@ -98,7 +101,7 @@ func (c *FriendshipController) FriendshipList(filter *model.FriendshipFilter) (*
 			ID:       f.Id,
 			UserID:   f.User.Id,
 			FriendID: f.Friend.Id,
-			Status:   generic.IntToFriendshipStatus(int(f.Status)),
+			Status:   utils.IntToFriendshipStatus(int(f.Status)),
 		})
 	}
 

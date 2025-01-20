@@ -2,7 +2,7 @@ package svc
 
 import (
 	"app/internal/core/cfg"
-	auth "app/internal/core/grpc/generated"
+	"app/internal/core/grpc/generated/lotof.hub.msvc.users/auth"
 	"context"
 	"errors"
 	"fmt"

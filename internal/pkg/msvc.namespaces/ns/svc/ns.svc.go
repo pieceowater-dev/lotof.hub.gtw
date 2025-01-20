@@ -2,7 +2,7 @@ package svc
 
 import (
 	"app/internal/core/cfg"
-	ns "app/internal/core/grpc/generated"
+	"app/internal/core/grpc/generated/lotof.hub.msvc.namespaces/ns"
 	"context"
 	"errors"
 	gossiper "github.com/pieceowater-dev/lotof.lib.gossiper/v2"
@@ -34,8 +34,10 @@ func NewNSService() *NSService {
 	}
 }
 
-func (s *NSService) GetNamespaces(input *ns.GetNamespacesRequest) (*ns.GetNamespacesResponse, error) {
-	ctx := context.Background()
+func (s *NSService) GetNamespaces(
+	ctx context.Context,
+	input *ns.GetNamespacesRequest,
+) (*ns.GetNamespacesResponse, error) {
 	response, err := s.transport.Send(ctx, s.client, "GetNamespaces", input)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)
@@ -48,8 +50,10 @@ func (s *NSService) GetNamespaces(input *ns.GetNamespacesRequest) (*ns.GetNamesp
 	return res, nil
 }
 
-func (s *NSService) GetNamespace(input *ns.GetNamespaceRequest) (*ns.Namespace, error) {
-	ctx := context.Background()
+func (s *NSService) GetNamespace(
+	ctx context.Context,
+	input *ns.GetNamespaceRequest,
+) (*ns.Namespace, error) {
 	response, err := s.transport.Send(ctx, s.client, "GetNamespace", input)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)
@@ -62,9 +66,10 @@ func (s *NSService) GetNamespace(input *ns.GetNamespaceRequest) (*ns.Namespace, 
 	return res, nil
 }
 
-func (s *NSService) CreateNamespace(input *ns.NamespaceRequest) (*ns.Namespace, error) {
-	ctx := context.Background()
-
+func (s *NSService) CreateNamespace(
+	ctx context.Context,
+	input *ns.NamespaceRequest,
+) (*ns.Namespace, error) {
 	response, err := s.transport.Send(ctx, s.client, "CreateNamespace", input)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)
@@ -79,8 +84,10 @@ func (s *NSService) CreateNamespace(input *ns.NamespaceRequest) (*ns.Namespace, 
 	return res, nil
 }
 
-func (s *NSService) UpdateNamespace(input *ns.UpdateNamespaceRequest) (*ns.Namespace, error) {
-	ctx := context.Background()
+func (s *NSService) UpdateNamespace(
+	ctx context.Context,
+	input *ns.UpdateNamespaceRequest,
+) (*ns.Namespace, error) {
 	response, err := s.transport.Send(ctx, s.client, "UpdateNamespace", input)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)
@@ -93,8 +100,10 @@ func (s *NSService) UpdateNamespace(input *ns.UpdateNamespaceRequest) (*ns.Names
 	return res, nil
 }
 
-func (s *NSService) AddAppToNamespace(input *ns.AddAppToNamespaceRequest) (*ns.NamespaceApp, error) {
-	ctx := context.Background()
+func (s *NSService) AddAppToNamespace(
+	ctx context.Context,
+	input *ns.AddAppToNamespaceRequest,
+) (*ns.NamespaceApp, error) {
 	response, err := s.transport.Send(ctx, s.client, "AddAppToNamespace", input)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)
@@ -109,8 +118,10 @@ func (s *NSService) AddAppToNamespace(input *ns.AddAppToNamespaceRequest) (*ns.N
 	return res, nil
 }
 
-func (s *NSService) NamespacesByApp(input *ns.NamespacesByAppRequest) (*ns.NamespacesByAppResponse, error) {
-	ctx := context.Background()
+func (s *NSService) NamespacesByApp(
+	ctx context.Context,
+	input *ns.NamespacesByAppRequest,
+) (*ns.NamespacesByAppResponse, error) {
 	response, err := s.transport.Send(ctx, s.client, "NamespacesByApp", input)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)

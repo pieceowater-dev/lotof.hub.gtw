@@ -2,7 +2,7 @@ package svc
 
 import (
 	"app/internal/core/cfg"
-	fr "app/internal/core/grpc/generated"
+	fr "app/internal/core/grpc/generated/lotof.hub.msvc.users/friendship"
 	"context"
 	"errors"
 	gossiper "github.com/pieceowater-dev/lotof.lib.gossiper/v2"

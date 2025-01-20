@@ -1,9 +1,10 @@
 package ctrl
 
 import (
-	"app/internal/core/generic"
+	"app/internal/core/generic/utils"
 	"app/internal/core/graph/model"
-	user "app/internal/core/grpc/generated"
+	pbUtils "app/internal/core/grpc/generated/generic/utils"
+	user "app/internal/core/grpc/generated/lotof.hub.msvc.users/user"
 	"app/internal/pkg/msvc.users/user/svc"
 	"context"
 	"log"
@@ -21,23 +22,23 @@ func NewUserController(service *svc.UserService) *UserController {
 func (c *UserController) Users(ctx context.Context, filter *model.DefaultFilterInput) (*model.PaginatedUserList, error) {
 	request := &user.GetUsersRequest{
 		Search:     "",
-		Pagination: &user.Pagination{},
-		Sort:       &user.Sort{},
+		Pagination: &pbUtils.Pagination{},
+		Sort:       &pbUtils.Sort{},
 	}
 
 	if filter.Search != nil {
 		request.Search = *filter.Search
 	}
 	if filter.Pagination != nil {
-		request.Pagination = &user.Pagination{
+		request.Pagination = &pbUtils.Pagination{
 			Page:   int32(*filter.Pagination.Page),
-			Length: generic.PaginationLengthToInt(*filter.Pagination.Length),
+			Length: utils.PaginationLengthToInt(*filter.Pagination.Length),
 		}
 	}
 	if filter.Sort != nil {
-		request.Sort = &user.Sort{
+		request.Sort = &pbUtils.Sort{
 			Field:     *filter.Sort.Field,
-			Direction: generic.SortByEnumToString(filter.Sort.By),
+			Direction: utils.SortByEnumToString(filter.Sort.By),
 		}
 	}
 

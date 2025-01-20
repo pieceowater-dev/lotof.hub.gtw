@@ -2,7 +2,8 @@ package svc
 
 import (
 	"app/internal/core/cfg"
-	member "app/internal/core/grpc/generated"
+	"app/internal/core/grpc/generated/generic/utils"
+	"app/internal/core/grpc/generated/lotof.hub.msvc.namespaces/member"
 	"context"
 	"errors"
 	gossiper "github.com/pieceowater-dev/lotof.lib.gossiper/v2"
@@ -64,32 +65,32 @@ func (s *MemberService) GetMember(input *member.GetMemberRequest) (*member.GetMe
 	return res, nil
 }
 
-func (s *MemberService) AddMemberToNamespace(input *member.MemberToNamespaceRequest) (*member.OK, error) {
+func (s *MemberService) AddMemberToNamespace(input *member.MemberToNamespaceRequest) (*utils.OK, error) {
 	ctx := context.Background()
 
 	response, err := s.transport.Send(ctx, s.client, "AddMemberToNamespace", input)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)
-		return &member.OK{Ok: false}, err
+		return &utils.OK{Ok: false}, err
 	}
-	res, ok := response.(*member.OK)
+	res, ok := response.(*utils.OK)
 	if !ok {
-		return &member.OK{Ok: false}, errors.New("invalid response type from gRPC transport")
+		return &utils.OK{Ok: false}, errors.New("invalid response type from gRPC transport")
 	}
 	return res, nil
 }
 
-func (s *MemberService) RemoveMemberFromNamespace(input *member.MemberToNamespaceRequest) (*member.OK, error) {
+func (s *MemberService) RemoveMemberFromNamespace(input *member.MemberToNamespaceRequest) (*utils.OK, error) {
 	ctx := context.Background()
 
 	response, err := s.transport.Send(ctx, s.client, "RemoveMemberFromNamespace", input)
 	if err != nil {
 		log.Printf("Error sending request: %v", err)
-		return &member.OK{Ok: false}, err
+		return &utils.OK{Ok: false}, err
 	}
-	res, ok := response.(*member.OK)
+	res, ok := response.(*utils.OK)
 	if !ok {
-		return &member.OK{Ok: false}, errors.New("invalid response type from gRPC transport")
+		return &utils.OK{Ok: false}, errors.New("invalid response type from gRPC transport")
 	}
 	return res, nil
 }

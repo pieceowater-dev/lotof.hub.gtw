@@ -2,10 +2,14 @@ module app
 
 go 1.23.0
 
+//todo: доделать рефактор гейта для хаба
+//todo: сделать рефактор юзеров для хаба
+//todo: сделать рефактор неймспейсов для хаба
+
 require (
 	github.com/99designs/gqlgen v0.17.56
 	github.com/joho/godotenv v1.5.1
-	github.com/pieceowater-dev/lotof.hub.proto v0.0.38
+	github.com/pieceowater-dev/lotof.hub.proto v0.0.59
 	github.com/pieceowater-dev/lotof.lib.gossiper/v2 v2.0.13
 	github.com/vektah/gqlparser/v2 v2.5.19
 	google.golang.org/grpc v1.68.0

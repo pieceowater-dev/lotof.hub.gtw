@@ -6,13 +6,32 @@ import (
 )
 
 type Module struct {
-	API *ctrl.UserController
+	name    string
+	version string
+	API     *ctrl.UserController
 }
 
-func NewUserModule() Module {
+func New() Module {
 	service := svc.NewUserService()
 	controller := ctrl.NewUserController(service)
 	return Module{
-		API: controller,
+		name:    "UsersMod",
+		version: "v1",
+		API:     controller,
 	}
+}
+
+// Initialize initializes the module. Currently not implemented.
+func (m Module) Initialize() error {
+	panic("Not implemented")
+}
+
+// Version returns the version of the module.
+func (m Module) Version() string {
+	return m.version
+}
+
+// Name returns the name of the module.
+func (m Module) Name() string {
+	return m.name
 }

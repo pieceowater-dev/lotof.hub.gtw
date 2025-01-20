@@ -6,6 +6,8 @@ import (
 	"context"
 )
 
+//todo: implement me
+
 type MemberController struct {
 	memberService *svc.MemberService
 }

@@ -11,20 +11,20 @@ import (
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
-	return r.UserProvider.API.CreateUser(ctx, input)
+	return r.UsersMod.API.CreateUser(ctx, input)
 }
 
 // UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input model.UserInput) (*model.User, error) {
-	return r.UserProvider.API.UpdateUser(ctx, id, &input)
+	return r.UsersMod.API.UpdateUser(ctx, id, &input)
 }
 
 // Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context, filter *model.DefaultFilterInput) (*model.PaginatedUserList, error) {
-	return r.UserProvider.API.Users(ctx, filter)
+	return r.UsersMod.API.Users(ctx, filter)
 }
 
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	return r.UserProvider.API.FindOneUser(ctx, id)
+	return r.UsersMod.API.FindOneUser(ctx, id)
 }

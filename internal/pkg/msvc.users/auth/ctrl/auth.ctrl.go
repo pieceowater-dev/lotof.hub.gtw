@@ -2,7 +2,8 @@ package ctrl
 
 import (
 	"app/internal/core/graph/model"
-	auth "app/internal/core/grpc/generated"
+	pbNs "app/internal/core/grpc/generated/lotof.hub.msvc.namespaces/ns"
+	"app/internal/core/grpc/generated/lotof.hub.msvc.users/auth"
 	ns "app/internal/pkg/msvc.namespaces/ns/svc"
 	"app/internal/pkg/msvc.users/auth/svc"
 	"context"
@@ -70,7 +71,7 @@ func (c *AuthController) Register(ctx context.Context, input model.RegisterReque
 		return nil, err
 	}
 
-	_, err = c.nsService.CreateNamespace(&auth.NamespaceRequest{
+	_, err = c.nsService.CreateNamespace(ctx, &pbNs.NamespaceRequest{
 		Title:       register.User.Username,
 		Slug:        register.User.Username,
 		Description: "",

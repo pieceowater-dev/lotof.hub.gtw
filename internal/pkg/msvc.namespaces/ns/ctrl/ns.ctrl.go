@@ -1,10 +1,11 @@
 package ctrl
 
 import (
-	"app/internal/core/generic"
+	"app/internal/core/generic/utils"
 	"app/internal/core/graph/model"
-	ns "app/internal/core/grpc/generated"
-	pb "app/internal/core/grpc/generated"
+	pbu "app/internal/core/grpc/generated/generic/utils"
+	"app/internal/core/grpc/generated/lotof.hub.gtw/gtw"
+	"app/internal/core/grpc/generated/lotof.hub.msvc.namespaces/ns"
 	"app/internal/pkg/msvc.namespaces/ns/svc"
 	"context"
 	"log"
@@ -12,7 +13,7 @@ import (
 
 type NSController struct {
 	nsService *svc.NSService
-	pb.UnimplementedGatewayServiceServer
+	gtw.UnimplementedGatewayServiceServer
 }
 
 func NewNSController(service *svc.NSService) *NSController {
@@ -20,7 +21,7 @@ func NewNSController(service *svc.NSService) *NSController {
 }
 
 func (c *NSController) CreateNamespace(
-	_ context.Context,
+	ctx context.Context,
 	input model.NamespaceInput,
 ) (*model.Namespace, error) {
 	nsDesc := ""
@@ -32,7 +33,7 @@ func (c *NSController) CreateNamespace(
 		Slug:        input.Slug,
 		Description: nsDesc,
 	}
-	res, err := c.nsService.CreateNamespace(request)
+	res, err := c.nsService.CreateNamespace(ctx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +48,7 @@ func (c *NSController) CreateNamespace(
 }
 
 func (c *NSController) UpdateNamespace(
-	_ context.Context,
+	ctx context.Context,
 	input model.NamespaceInput,
 ) (*model.Namespace, error) {
 	request := &ns.UpdateNamespaceRequest{
@@ -56,7 +57,7 @@ func (c *NSController) UpdateNamespace(
 		Description: *input.Description,
 	}
 
-	res, err := c.nsService.UpdateNamespace(request)
+	res, err := c.nsService.UpdateNamespace(ctx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -71,32 +72,32 @@ func (c *NSController) UpdateNamespace(
 }
 
 func (c *NSController) Namespaces(
-	_ context.Context,
+	ctx context.Context,
 	filter *model.DefaultFilterInput,
 ) (*model.PaginatedNamespaceList, error) {
 	request := &ns.GetNamespacesRequest{
 		Search:     "",
-		Pagination: &ns.Pagination{},
-		Sort:       &ns.Sort{},
+		Pagination: &pbu.Pagination{},
+		Sort:       &pbu.Sort{},
 	}
 
 	if filter.Search != nil {
 		request.Search = *filter.Search
 	}
 	if filter.Pagination != nil {
-		request.Pagination = &ns.Pagination{
+		request.Pagination = &pbu.Pagination{
 			Page:   int32(*filter.Pagination.Page),
-			Length: generic.PaginationLengthToInt(*filter.Pagination.Length),
+			Length: utils.PaginationLengthToInt(*filter.Pagination.Length),
 		}
 	}
 	if filter.Sort != nil {
-		request.Sort = &ns.Sort{
+		request.Sort = &pbu.Sort{
 			Field:     *filter.Sort.Field,
-			Direction: generic.SortByEnumToString(filter.Sort.By),
+			Direction: utils.SortByEnumToString(filter.Sort.By),
 		}
 	}
 
-	response, err := c.nsService.GetNamespaces(request)
+	response, err := c.nsService.GetNamespaces(ctx, request)
 	if err != nil {
 		log.Printf("Error fetching: %v", err)
 		return nil, err
@@ -122,13 +123,13 @@ func (c *NSController) Namespaces(
 }
 
 func (c *NSController) Namespace(
-	_ context.Context,
+	ctx context.Context,
 	id string,
 ) (*model.Namespace, error) {
 	request := &ns.GetNamespaceRequest{
 		Id: id,
 	}
-	res, err := c.nsService.GetNamespace(request)
+	res, err := c.nsService.GetNamespace(ctx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (c *NSController) Namespace(
 }
 
 func (c *NSController) AddAppToNamespace(
-	_ context.Context,
+	ctx context.Context,
 	namespaceID string,
 	appBundle string,
 ) (*model.NamespaceApp, error) {
@@ -151,7 +152,7 @@ func (c *NSController) AddAppToNamespace(
 		NamespaceId: namespaceID,
 		AppBundle:   appBundle,
 	}
-	res, err := c.nsService.AddAppToNamespace(request)
+	res, err := c.nsService.AddAppToNamespace(ctx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -163,24 +164,27 @@ func (c *NSController) AddAppToNamespace(
 	}, nil
 }
 
-func (c *NSController) GatewayNamespacesByApp(_ context.Context, request *pb.GatewayNamespacesByAppRequest) (*pb.GatewayNamespacesByAppResponse, error) {
+func (c *NSController) GatewayNamespacesByApp(
+	ctx context.Context,
+	request *gtw.GatewayNamespacesByAppRequest,
+) (*gtw.GatewayNamespacesByAppResponse, error) {
 	req := &ns.NamespacesByAppRequest{
 		AppBundle: request.AppBundle,
 	}
-	res, err := c.nsService.NamespacesByApp(req)
+	res, err := c.nsService.NamespacesByApp(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 
-	var tenants []*pb.GatewayEncryptedTenant
+	var tenants []*gtw.GatewayEncryptedTenant
 	for _, tenant := range res.Tenants {
-		tenants = append(tenants, &pb.GatewayEncryptedTenant{
+		tenants = append(tenants, &gtw.GatewayEncryptedTenant{
 			Namespace:   tenant.Namespace,
 			Credentials: tenant.Credentials,
 		})
 	}
 
-	return &pb.GatewayNamespacesByAppResponse{
+	return &gtw.GatewayNamespacesByAppResponse{
 		Tenants: tenants,
 	}, nil
 }

@@ -13,10 +13,10 @@ import (
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	UserProvider       user.Module
-	AuthProvider       auth.Module
-	FriendshipProvider friendship.Module
+	AuthMod        auth.Module
+	UsersMod       user.Module
+	FriendshipsMod friendship.Module
 
-	NSProvider     ns.Module
-	MemberProvider member.Module
+	NamespacesMod ns.Module
+	MembersMod    member.Module
 }
