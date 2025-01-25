@@ -51,7 +51,7 @@ func main() {
 		Resolvers: resolvers.(graph.ResolverRoot),
 		Directives: graph.DirectiveRoot{
 			Auth: func(ctx context.Context, obj any, next graphql.Resolver) (any, error) {
-				return middleware.AuthDirective(ctx, next, resolvers.(res.Resolver).AuthMod.API.VerifyToken)
+				return middleware.AuthDirective(ctx, next, resolvers.(*res.Resolver).AuthMod.API.VerifyToken)
 			},
 		},
 	}))
