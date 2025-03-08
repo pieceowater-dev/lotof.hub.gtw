@@ -28,3 +28,8 @@ func (r *queryResolver) Users(ctx context.Context, filter *model.DefaultFilterIn
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
 	return r.UsersMod.API.FindOneUser(ctx, id)
 }
+
+// Me is the resolver for me field.
+func (r *queryResolver) Me(ctx context.Context) (*model.User, error) {
+	return r.UsersMod.API.Me(ctx)
+}

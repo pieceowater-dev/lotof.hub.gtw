@@ -4,7 +4,6 @@ import (
 	"app/internal/core/cfg"
 	"app/internal/core/generic/middleware"
 	"app/internal/core/graph"
-	"app/internal/core/middlewares"
 	"app/internal/pkg"
 	res "app/internal/pkg/_resolvers"
 	"context"
@@ -61,7 +60,7 @@ func main() {
 	mux.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	mux.Handle("/query", srv)
 
-	corsMiddleware := middlewares.CORSMiddleware(mux)
+	corsMiddleware := middleware.CORSMiddleware(mux)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", appCfg.AppPort)
 	log.Fatal(http.ListenAndServe(":"+appCfg.AppPort, corsMiddleware))

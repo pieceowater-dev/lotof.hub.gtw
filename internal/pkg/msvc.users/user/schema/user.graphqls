@@ -18,6 +18,7 @@ type PaginatedUserList {
 extend type Query {
     users(filter: DefaultFilterInput): PaginatedUserList! @auth
     user(id: ID!): User @auth
+    me: User @auth
 }
 
 extend type Mutation {

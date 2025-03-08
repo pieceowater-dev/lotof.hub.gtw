@@ -1,12 +1,14 @@
 package ctrl
 
 import (
+	"app/internal/core/generic/middleware"
 	"app/internal/core/generic/utils"
 	"app/internal/core/graph/model"
 	pbUtils "app/internal/core/grpc/generated/generic/utils"
 	user "app/internal/core/grpc/generated/lotof.hub.msvc.users/user"
 	"app/internal/pkg/msvc.users/user/svc"
 	"context"
+	"errors"
 	"log"
 )
 
@@ -121,4 +123,14 @@ func (c *UserController) UpdateUser(ctx context.Context, id string, input *model
 		Username: updateUser.Username,
 		Email:    updateUser.Email,
 	}, nil
+}
+
+// Me retrieves the current user by decrypted token.
+func (c *UserController) Me(ctx context.Context) (*model.User, error) {
+	me, ok := ctx.Value(middleware.TokenContextKey).(*model.User)
+	if !ok {
+		return nil, errors.New("unable to fetch current user")
+	}
+
+	return me, nil
 }
