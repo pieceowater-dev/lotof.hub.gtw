@@ -118,10 +118,8 @@ github.com/paulmach/orb v0.11.1/go.mod h1:5mULz1xQfs3bmQm63QEJA6lNGujuRafwA5S/En
 github.com/paulmach/protoscan v0.2.1/go.mod h1:SpcSwydNLrxUGSDvXvO0P7g7AuhJ7lcKfDlhJCDw2gY=
 github.com/pelletier/go-toml/v2 v2.2.2 h1:aYUidT7k73Pcl9nb2gScu7NSrKCSHIDE89b3+6Wq+LM=
 github.com/pelletier/go-toml/v2 v2.2.2/go.mod h1:1t835xjRzz80PqgE6HHgN2JOsmgYu/h4qDAS4n929Rs=
-github.com/pieceowater-dev/lotof.hub.proto v0.0.59 h1:XM56RMLb7VxgLMrpmQfTIHkpwQ1aLIPGurLgmEOR3Ks=
-github.com/pieceowater-dev/lotof.hub.proto v0.0.59/go.mod h1:9uwfvIUGGzTrTIVzQ4gH8hmrRC8sgtnLUhyPN5swIME=
-github.com/pieceowater-dev/lotof.hub.proto v0.0.60 h1:bSfL4+nAy5ZZKmyKc/8/1WZPUBtfezGSXuycuPtHQdI=
-github.com/pieceowater-dev/lotof.hub.proto v0.0.60/go.mod h1:9uwfvIUGGzTrTIVzQ4gH8hmrRC8sgtnLUhyPN5swIME=
+github.com/pieceowater-dev/lotof.hub.proto v0.0.61 h1:mGO/zrtVlavcTj1TsD+2f6sI9/fB9aGrr53ejTGigMI=
+github.com/pieceowater-dev/lotof.hub.proto v0.0.61/go.mod h1:9uwfvIUGGzTrTIVzQ4gH8hmrRC8sgtnLUhyPN5swIME=
 github.com/pieceowater-dev/lotof.lib.gossiper/v2 v2.0.13 h1:gcsEyGrurx8RkQGrefD7ftoPqmoAT4fbc7bmfXsGbxw=
 github.com/pieceowater-dev/lotof.lib.gossiper/v2 v2.0.13/go.mod h1:XLkDdT/Ll6bY0yTaNmx+rbNDgryvoJwDfg2I6I9cmQ0=
 github.com/pierrec/lz4/v4 v4.1.21 h1:yOVMLb6qSIDP67pl/5F7RepeKYu/VmTyEXvuMI5d9mQ=

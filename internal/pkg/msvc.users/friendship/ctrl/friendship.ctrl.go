@@ -43,8 +43,11 @@ func (c *FriendshipController) CreateFriendship(ctx context.Context, input model
 	return &model.Friendship{
 		ID:     createFriendship.Id,
 		UserID: createFriendship.User.Id,
-		//FriendID: createFriendship.Friend.Id,
-		Friend: createFriendship.Friend,
+		Friend: &model.User{
+			ID:       createFriendship.Friend.Id,
+			Username: createFriendship.Friend.Username,
+			Email:    createFriendship.Friend.Email,
+		},
 		Status: utils.IntToFriendshipStatus(int(createFriendship.Status)),
 	}, nil
 }
@@ -60,10 +63,14 @@ func (c *FriendshipController) AcceptFriendshipRequest(ctx context.Context, inpu
 	}
 
 	return &model.Friendship{
-		ID:       acceptFriendship.Id,
-		UserID:   acceptFriendship.User.Id,
-		FriendID: acceptFriendship.Friend.Id,
-		Status:   utils.IntToFriendshipStatus(int(acceptFriendship.Status)),
+		ID:     acceptFriendship.Id,
+		UserID: acceptFriendship.User.Id,
+		Friend: &model.User{
+			ID:       acceptFriendship.Friend.Id,
+			Username: acceptFriendship.Friend.Username,
+			Email:    acceptFriendship.Friend.Email,
+		},
+		Status: utils.IntToFriendshipStatus(int(acceptFriendship.Status)),
 	}, nil
 }
 
@@ -108,10 +115,14 @@ func (c *FriendshipController) FriendshipList(ctx context.Context, filter *model
 	var result []*model.Friendship
 	for _, f := range friendshipList.Friendships {
 		result = append(result, &model.Friendship{
-			ID:       f.Id,
-			UserID:   f.User.Id,
-			FriendID: f.Friend.Id,
-			Status:   utils.IntToFriendshipStatus(int(f.Status)),
+			ID:     f.Id,
+			UserID: f.User.Id,
+			Friend: &model.User{
+				ID:       f.Friend.Id,
+				Username: f.Friend.Username,
+				Email:    f.Friend.Email,
+			},
+			Status: utils.IntToFriendshipStatus(int(f.Status)),
 		})
 	}
 
@@ -153,10 +164,14 @@ func (c *FriendshipController) MyFriends(ctx context.Context, status *model.Frie
 	var result []*model.Friendship
 	for _, f := range friendshipList.Friendships {
 		result = append(result, &model.Friendship{
-			ID:       f.Id,
-			UserID:   f.User.Id,
-			FriendID: f.Friend.Id,
-			Status:   utils.IntToFriendshipStatus(int(f.Status)),
+			ID:     f.Id,
+			UserID: f.User.Id,
+			Friend: &model.User{
+				ID:       f.Friend.Id,
+				Username: f.Friend.Username,
+				Email:    f.Friend.Email,
+			},
+			Status: utils.IntToFriendshipStatus(int(f.Status)),
 		})
 	}
 
