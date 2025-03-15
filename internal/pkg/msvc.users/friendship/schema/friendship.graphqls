@@ -35,6 +35,7 @@ input RemoveFriendshipInput {
 }
 
 extend type Query {
+    myFriends(status: FriendshipStatus): PaginatedFriendshipList! @auth
     friendshipList(filter: FriendshipFilter): PaginatedFriendshipList! @auth
 }
 

@@ -11,21 +11,26 @@ import (
 
 // CreateFriendship is the resolver for the createFriendship field.
 func (r *mutationResolver) CreateFriendship(ctx context.Context, input model.CreateFriendshipInput) (*model.Friendship, error) {
-	return r.FriendshipsMod.API.CreateFriendship(input)
+	return r.FriendshipsMod.API.CreateFriendship(ctx, input)
 }
 
 // AcceptFriendshipRequest is the resolver for the acceptFriendshipRequest field.
 func (r *mutationResolver) AcceptFriendshipRequest(ctx context.Context, input model.AcceptFriendshipInput) (*model.Friendship, error) {
 	//panic(fmt.Errorf("not implemented: AcceptFriendshipRequest - acceptFriendshipRequest"))
-	return r.FriendshipsMod.API.AcceptFriendshipRequest(input)
+	return r.FriendshipsMod.API.AcceptFriendshipRequest(ctx, input)
 }
 
 // RemoveFriendship is the resolver for the removeFriendshipRequest field.
 func (r *mutationResolver) RemoveFriendship(ctx context.Context, input model.RemoveFriendshipInput) (bool, error) {
-	return r.FriendshipsMod.API.RemoveFriendship(input)
+	return r.FriendshipsMod.API.RemoveFriendship(ctx, input)
+}
+
+// MyFriends is the resolver for the myFriends field.
+func (r *queryResolver) MyFriends(ctx context.Context, status *model.FriendshipStatus) (*model.PaginatedFriendshipList, error) {
+	return r.FriendshipsMod.API.MyFriends(ctx, status)
 }
 
 // FriendshipList is the resolver for the friendshipRequestList field.
 func (r *queryResolver) FriendshipList(ctx context.Context, filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
-	return r.FriendshipsMod.API.FriendshipList(filter)
+	return r.FriendshipsMod.API.FriendshipList(ctx, filter)
 }

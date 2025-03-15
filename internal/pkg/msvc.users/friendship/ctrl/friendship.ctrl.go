@@ -1,10 +1,13 @@
 package ctrl
 
 import (
+	"app/internal/core/generic/middleware"
 	"app/internal/core/generic/utils"
 	"app/internal/core/graph/model"
 	fr "app/internal/core/grpc/generated/lotof.hub.msvc.users/friendship"
 	"app/internal/pkg/msvc.users/friendship/svc"
+	"context"
+	"errors"
 
 	//fr "app/internal/core/grpc/generated/lotof.hub.msvc.users/friendship"
 	//"app/internal/pkg/msvc.users/friendship/svc"
@@ -19,7 +22,7 @@ func NewFriendshipController(service *svc.FriendshipService) *FriendshipControll
 	return &FriendshipController{friendshipService: service}
 }
 
-func (c *FriendshipController) CreateFriendship(input model.CreateFriendshipInput) (*model.Friendship, error) {
+func (c *FriendshipController) CreateFriendship(ctx context.Context, input model.CreateFriendshipInput) (*model.Friendship, error) {
 	request := &fr.CreateFriendshipInput{
 		UserId:   input.UserID,
 		FriendId: input.FriendID,
@@ -39,7 +42,7 @@ func (c *FriendshipController) CreateFriendship(input model.CreateFriendshipInpu
 	}, nil
 }
 
-func (c *FriendshipController) AcceptFriendshipRequest(input model.AcceptFriendshipInput) (*model.Friendship, error) {
+func (c *FriendshipController) AcceptFriendshipRequest(ctx context.Context, input model.AcceptFriendshipInput) (*model.Friendship, error) {
 	request := &fr.AcceptFriendshipInput{
 		FriendshipId: input.FriendshipID,
 	}
@@ -57,7 +60,7 @@ func (c *FriendshipController) AcceptFriendshipRequest(input model.AcceptFriends
 	}, nil
 }
 
-func (c *FriendshipController) RemoveFriendship(input model.RemoveFriendshipInput) (bool, error) {
+func (c *FriendshipController) RemoveFriendship(ctx context.Context, input model.RemoveFriendshipInput) (bool, error) {
 	// Mapping the input to gRPC model
 	request := &fr.RemoveFriendshipInput{
 		FriendshipId: input.FriendshipID,
@@ -73,7 +76,7 @@ func (c *FriendshipController) RemoveFriendship(input model.RemoveFriendshipInpu
 	return true, nil
 }
 
-func (c *FriendshipController) FriendshipList(filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
+func (c *FriendshipController) FriendshipList(ctx context.Context, filter *model.FriendshipFilter) (*model.PaginatedFriendshipList, error) {
 	// Default to FriendshipStatusAccepted if Status is nil
 	if filter.Status == nil {
 		// Create a variable and take the address of it
@@ -85,6 +88,51 @@ func (c *FriendshipController) FriendshipList(filter *model.FriendshipFilter) (*
 	request := &fr.FriendshipFilter{
 		UserId: filter.UserID,
 		Status: uint32(utils.FriendshipStatusToInt(*filter.Status)),
+	}
+
+	// Calling the service to get the friendship list
+	friendshipList, err := c.friendshipService.FriendshipList(request)
+	if err != nil {
+		log.Printf("Error fetching friendships: %v", err)
+		return nil, err
+	}
+
+	// Mapping the response to GraphQL model
+	var result []*model.Friendship
+	for _, f := range friendshipList.Friendships {
+		result = append(result, &model.Friendship{
+			ID:       f.Id,
+			UserID:   f.User.Id,
+			FriendID: f.Friend.Id,
+			Status:   utils.IntToFriendshipStatus(int(f.Status)),
+		})
+	}
+
+	return &model.PaginatedFriendshipList{
+		Rows: result,
+		Info: &model.PaginationInfo{
+			Count: int(friendshipList.PaginationInfo.Count),
+		},
+	}, nil
+}
+
+func (c *FriendshipController) MyFriends(ctx context.Context, status *model.FriendshipStatus) (*model.PaginatedFriendshipList, error) {
+	// Default to FriendshipStatusAccepted if Status is nil
+	if status == nil {
+		// Create a variable and take the address of it
+		s := model.FriendshipStatusAccepted
+		status = &s
+	}
+
+	currUser, ok := ctx.Value(middleware.TokenContextKey).(*model.User)
+	if !ok {
+		return nil, errors.New("user not found in context")
+	}
+
+	// Mapping the filter to gRPC model for pagination, search, and sorting
+	request := &fr.FriendshipFilter{
+		UserId: currUser.ID,
+		Status: uint32(utils.FriendshipStatusToInt(*status)),
 	}
 
 	// Calling the service to get the friendship list
