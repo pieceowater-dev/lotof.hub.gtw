@@ -1,7 +1,8 @@
 type Friendship {
     id: ID!
     userId: ID!
-    friendId: ID!
+    friend: User!
+#    friendId: ID!
     status: FriendshipStatus!
 }
 

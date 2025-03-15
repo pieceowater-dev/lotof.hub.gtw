@@ -5,6 +5,7 @@ import (
 	"app/internal/core/generic/utils"
 	"app/internal/core/graph/model"
 	fr "app/internal/core/grpc/generated/lotof.hub.msvc.users/friendship"
+	usr "app/internal/core/grpc/generated/lotof.hub.msvc.users/user"
 	"app/internal/pkg/msvc.users/friendship/svc"
 	"context"
 	"errors"
@@ -24,8 +25,13 @@ func NewFriendshipController(service *svc.FriendshipService) *FriendshipControll
 
 func (c *FriendshipController) CreateFriendship(ctx context.Context, input model.CreateFriendshipInput) (*model.Friendship, error) {
 	request := &fr.CreateFriendshipInput{
-		UserId:   input.UserID,
-		FriendId: input.FriendID,
+		UserId: input.UserID,
+		//FriendId: input.FriendID,
+		Friend: &usr.User{
+			Id:       "",
+			Username: "",
+			Email:    "",
+		},
 	}
 
 	createFriendship, err := c.friendshipService.CreateFriendship(request)
@@ -35,10 +41,11 @@ func (c *FriendshipController) CreateFriendship(ctx context.Context, input model
 	}
 
 	return &model.Friendship{
-		ID:       createFriendship.Id,
-		UserID:   createFriendship.User.Id,
-		FriendID: createFriendship.Friend.Id,
-		Status:   utils.IntToFriendshipStatus(int(createFriendship.Status)),
+		ID:     createFriendship.Id,
+		UserID: createFriendship.User.Id,
+		//FriendID: createFriendship.Friend.Id,
+		Friend: createFriendship.Friend,
+		Status: utils.IntToFriendshipStatus(int(createFriendship.Status)),
 	}, nil
 }
 
